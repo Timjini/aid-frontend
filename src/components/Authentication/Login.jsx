@@ -21,7 +21,7 @@ import authenticationApi from '../../apis/authentication';
 import { useAuthDispatch } from '../../contexts/auth';
 import { useUserDispatch } from '../../contexts/user';
 import { Formik, Field } from 'formik';
-import { validateEmail, validatePassword, validateName } from './validations';
+import { validateEmail, validatePassword } from './validations';
 
 const InternalLink = ({ path, text }) => {
   return (

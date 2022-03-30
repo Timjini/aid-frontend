@@ -39,7 +39,7 @@ const [request, setRequest] = React.useState(null);
   if(!request) return null;
 
   
-  return (
+  return isLoaded ?(
     <>
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -58,7 +58,7 @@ const [request, setRequest] = React.useState(null);
 
       </GoogleMap>
       </>
-  )  
+  )  : <></>
 }
 
 export default React.memo(Location)
