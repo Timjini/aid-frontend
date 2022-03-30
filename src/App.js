@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Main from './components/Main';
+import { ChakraProvider, Box, Grid, theme } from '@chakra-ui/react';
+import { AuthProvider } from './contexts/auth';
+import { UserProvider } from './contexts/user';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <UserProvider>
+      <ChakraProvider theme={theme}>
+          <Box textAlign="center" fontSize="xl">
+            {/* <Grid minH="100vh" p={3}>
+        <ColorModeSwitcher justifySelf="flex-end" />
+        </Grid> */}
+            <Main {...props} />
+          </Box>
+        </ChakraProvider>
+      </UserProvider>
+    </AuthProvider>
   );
 }
 
