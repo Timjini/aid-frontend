@@ -22,7 +22,7 @@ export default class Editrequest extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://hidden-eyrie-18402.herokuapp.com/api/v1/requests/54`, this.state)
+    axios.put(`https://hidden-eyrie-18402.herokuapp.com/api/v1/demands/54`, this.state)
     .then(response =>{
       console.log(response)
     })

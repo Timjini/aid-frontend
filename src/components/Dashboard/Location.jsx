@@ -7,7 +7,7 @@ const containerStyle = {
   height: '50vh'
 };
 
-const baseURL = "https://hidden-eyrie-18402.herokuapp.com/api/v1/requests";
+const baseURL = "https://hidden-eyrie-18402.herokuapp.com/api/v1/demands";
 
 function Location() {
   const { isLoaded } = useJsApiLoader({
