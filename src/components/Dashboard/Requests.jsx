@@ -19,7 +19,7 @@ function Requests(){
 
 
   useEffect (() => {
-    axios.get('http://localhost:3001/api/v1/requests')
+    axios.get('https://hidden-eyrie-18402.herokuapp.com/api/v1/requests')
     .then (res => {
       setData(res.data)
       console.log(res.data)
@@ -43,7 +43,7 @@ function Requests(){
     }
     setIsLoading(true);
     try {
-      const response = await axios.post(`http://localhost:3001/api/v1/requests`, {
+      const response = await axios.post(`https://hidden-eyrie-18402.herokuapp.com/api/v1/requests`, {
         address,
         description,
       });
@@ -63,7 +63,7 @@ function Requests(){
   };
 
   const deleteData = async (id, e) => {
-    let data = await axios.delete(`http://localhost:3001/api/v1/requests/${id}`)
+    let data = await axios.delete(`https://hidden-eyrie-18402.herokuapp.com/api/v1/requests/${id}`)
     setData();
     // try {
     //   const res = await axios.delete(`http://localhost:3001/api/v1/requests/${id}`)

@@ -5,7 +5,7 @@ import Messages from './Messages';
  
 function Rooms() {
   const { id } = useParams();
-  const {data , loading} = useAxios('http://localhost:3001/api/v1/rooms/'+ id);
+  const {data , loading} = useAxios('https://hidden-eyrie-18402.herokuapp.com/api/v1/rooms/'+ id);
 
   return (
     <><div className='p-5'>

@@ -8,7 +8,7 @@ function Messages() {
     const [data, setData] = useState ([])
   
     useEffect (() => {
-        axios.get('http://localhost:3001/api/v1/rooms/1/messages/1')
+        axios.get('https://hidden-eyrie-18402.herokuapp.com/api/v1/rooms/1/messages/1')
         .then (res => {
           setData(res.data)
           console.log(res.data)
