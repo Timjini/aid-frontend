@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import { useEffect, useState} from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Link from 'react';
 
 function Requests(){
   const [data, setData] = useState ([])
@@ -26,15 +25,6 @@ function Requests(){
     })
   }, [])
 
-  // const postData = (e) => {
-  //   e.preventDefault();
-  //   axios.post('http://localhost:3001/api/v1/requests', {
-  //     address, description
-  //   }).then (res => { console.log(res) 
-  //   } )
-
-  //   alert("Request added ! ")
-  // }
 
   const postData = async (e) => {
     if (!address.trim() || !description.trim()) {
@@ -65,20 +55,8 @@ function Requests(){
   const deleteData = async (id, e) => {
     let data = await axios.delete(`https://hidden-eyrie-18402.herokuapp.com/api/v1/requests/${id}`)
     setData();
-    // try {
-    //   const res = await axios.delete(`http://localhost:3001/api/v1/requests/${id}`)
-    //   console.log('Item successfully deleted.')
-    // } catch (error) {
-    //   alert(error)
-    // }
   }
-  // const deleteData = (id, e) => {
-  //   e.preventDefault(id, e);
-  //   axios.delete(`http://localhost:3001/api/v1/requests/${id}`)
-  //   .then (res => { console.log('deleted!',res);
-  //   setData([...description,address]);}
-  //   )
-  // }
+
 
 
   const arr = data.map((data, index) => {
