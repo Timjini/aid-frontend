@@ -7,8 +7,9 @@ import Profile from "./Account/Profile";
 import AccountEdit from "./Account/AccountEdit";
 import Requests from './Requests';
 import Addrequest from './Addrequest';
-import Calls from './Calls';
 import Editrequest from "./Editrequest";
+import Rooms from "./Rooms";
+import Messages from "./Messages";
 
 const Home = () => {
   return (
@@ -21,8 +22,9 @@ const Home = () => {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/requests" component={Requests} />
           <Route exact path="/addrequest" component={Addrequest} />
-          <Route exact path="/calls" component={Calls} />
           <Route exact path="/editrequest" component={Editrequest} />
+          <Route exact path="/rooms/:id" component={Rooms} />
+          <Route exact path="/messages" component={Messages} />
           <Redirect from="/" to="/home" />
         </Switch>
       </Box>

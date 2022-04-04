@@ -95,7 +95,7 @@ function Requests(){
         <Card.Text>
         {data.description}
         </Card.Text>
-            <Button variant="contained">Update</Button>
+            <Button variant="contained">Contact</Button>
             <Button variant="primary" type="submit" onClick={() => deleteData(data.id)} >Delete</Button>
           </Card.Body>
         </Card>
