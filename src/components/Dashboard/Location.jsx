@@ -6,6 +6,10 @@ const containerStyle = {
   width: '100vw',
   height: '50vh'
 };
+const center = {
+  lat: -3.745,
+  lng: -38.523
+};
 
 const baseURL = "https://hidden-eyrie-18402.herokuapp.com/api/v1/asks";
 
@@ -43,8 +47,8 @@ const [request, setRequest] = React.useState(null);
     <>
       <GoogleMap
         mapContainerStyle={containerStyle}
-        defaultCenter={ {lat: 44.9782, lng: 27.9784} }
-        defaultZoom={3}
+        center={center}
+        zoom={10}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
