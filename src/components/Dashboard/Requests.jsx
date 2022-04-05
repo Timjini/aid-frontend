@@ -18,7 +18,7 @@ function Requests(){
 
 
   useEffect (() => {
-    axios.get('https://hidden-eyrie-18402.herokuapp.com/api/v1/requests')
+    axios.get('https://hidden-eyrie-18402.herokuapp.com/api/v1/demands')
     .then (res => {
       setData(res.data)
       console.log(res.data)
