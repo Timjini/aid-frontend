@@ -14,6 +14,7 @@ function Requests(){
 
   const [description, setDescription] = useState ('')
   const [address, setAddress] = useState ('')
+  const [kind, setKind] = useState('')
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -36,6 +37,7 @@ function Requests(){
       const response = await axios.post(`https://hidden-eyrie-18402.herokuapp.com/api/v1/asks`, {
         address,
         description,
+        kind,
       });
       if (response.status === 201) {
         alert(` You have created: ${JSON.stringify(response.data)}`);
@@ -99,7 +101,6 @@ function Requests(){
               />
             </Form.Group>
             </Col>
-            <Col>
             <Form.Group className="mb-3">
                 <Form.Label htmlFor="inputText">Description</Form.Label>
                   <Form.Control
@@ -109,8 +110,21 @@ function Requests(){
                     onChange={(e) => setDescription(e.target.value)}
                    />
             </Form.Group>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3">
+                <Form.Label>select menu</Form.Label>
+                <Form.Select
+                type="text" 
+                value={kind}
+                onChange={(e) => setDescription(e.target.value)}
+                                    >
+                  <option>Material Need</option>
+                  <option>One-time Task</option>
+                </Form.Select>
+              </Form.Group>
             </Col>
-            
           </Row>
           <Col md={{ span: 4, offset: 4 }} >
           <Button type="submit" onClick={postData}>Submit</Button>
