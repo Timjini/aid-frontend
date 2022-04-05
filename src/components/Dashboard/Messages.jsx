@@ -1,6 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import useAxios from '../../apis/useAxios';
+// import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+// import useAxios from '../../apis/useAxios';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
  
