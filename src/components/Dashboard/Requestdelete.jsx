@@ -15,7 +15,7 @@ export default class Requestdelete extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-    axios.delete(`https://hidden-eyrie-18402.herokuapp.com/api/v1/demands/${this.state.id}`)
+    axios.delete(`https://hidden-eyrie-18402.herokuapp.com/api/v1/asks/${this.state.id}`)
 .then(res => {
   console.log(res)
 })

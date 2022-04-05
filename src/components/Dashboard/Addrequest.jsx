@@ -22,7 +22,7 @@ export default class Addrequest extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`https://hidden-eyrie-18402.herokuapp.com/api/v1/demands`, this.state)
+    axios.post(`https://hidden-eyrie-18402.herokuapp.com/api/v1/asks`, this.state)
     .then(response =>{
       console.log(response)
     })
