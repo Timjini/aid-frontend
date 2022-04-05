@@ -111,21 +111,6 @@ function Requests(){
                    />
             </Form.Group>
           </Row>
-          <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>select menu</Form.Label>
-                <Form.Select
-                type="text" 
-                value={kind}
-                onChange={(e) => setDescription(e.target.value)}
-                                    >
-                  <option>Material Need</option>
-                  <option>One-time Task</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-          </Row>
           <Col md={{ span: 4, offset: 4 }} >
           <Button type="submit" onClick={postData}>Submit</Button>
           </Col>
