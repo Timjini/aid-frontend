@@ -32,16 +32,9 @@ export default function CallToActionWithVideo() {
             fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
             <Text
               as={'span'}
-              position={'relative'}
-              _after={{
-                content: "''",
-                width: 'full',
-                height: '30%',
-                position: 'absolute',
-                left: 0,
-                bg: 'red.400',
-                zIndex: -1,
-              }}>
+              position={'relative'}>
+                
+                <span role="img" aria-label="Party">🥳</span>
               AID PLATFORM
             </Text>
             <br />
@@ -62,9 +55,9 @@ export default function CallToActionWithVideo() {
               size={'lg'}
               fontWeight={'normal'}
               px={6}
-              colorScheme={'red'}
-              bg={'red.400'}
-              _hover={{ bg: 'red.500' }}
+              colorScheme={'blue'}
+              bg={'blue.400'}
+              _hover={{ bg: 'blue.500' }}
               as={Link}
               to="/login">
               Sign in
