@@ -38,7 +38,6 @@ export default function CallToActionWithVideo() {
                 width: 'full',
                 height: '30%',
                 position: 'absolute',
-                bottom: 1,
                 left: 0,
                 bg: 'red.400',
                 zIndex: -1,
@@ -51,7 +50,9 @@ export default function CallToActionWithVideo() {
             </Text>
           </Heading>
           <Flex justifyContent="center" textAlign="left">
-           <p>Helping people never been better and easier</p>
+           <p>Helping people never been better and easier. </p>
+            <p>Username : pirate@gmail.com <br/>
+            Password: 123456 </p> <br/>
           </Flex>
           <Stack
             spacing={{ base: 4, sm: 6 }}
