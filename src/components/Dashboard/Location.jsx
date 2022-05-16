@@ -1,68 +1,75 @@
-import React from 'react'
-import { GoogleMap, useJsApiLoader, Marker} from '@react-google-maps/api';
+import React, {useEffect, useState} from 'react'
+//import { GoogleMap, useJsApiLoader, Marker} from '@react-google-maps/api';
+import {MapContainer, TileLayer ,Marker,Popup} from 'react-leaflet';
+import '../styles/Home.css';
 import axios from 'axios';
+import CustomMarker from './CustomMarker';
+import L from 'leaflet';
 
-const containerStyle = {
-  width: '100vw',
-  height: '50vh'
-};
-const center = {
-  lat: -3.745,
-  lng: -38.523
-};
 
-const baseURL = "https://hidden-eyrie-18402.herokuapp.com/api/v1/asks";
+
+
+const baseURL = "http://localhost:3001/api/v1/asks";
+
+
+
+// const kind = 'One time Task' ;
+
+const markerIcon = new L.icon ({
+  iconUrl: require("../../assets/images/money-box.png"),
+  iconSize: [40,40]
+
+});
+
+// const markerIcon2 = new L.icon ({
+//   iconUrl: require("../../assets/images/one-task.png"),
+//   iconSize: [40,40]
+
+// });
+
+// let marker;
+
+// if (kind === 'One time Task') {
+//   marker = markerIcon ;
+//   console.log("marker")
+// }else {
+//   marker = markerIcon2;
+//   console.log("no")
+// }
+
+
+
 
 function Location() {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyD8_QKqZNpfYJQqelOONNrLoK7Jb4em2mM"
-  })
 
-  const [map, setMap] = React.useState(null)
+const [request, setRequest] = useState([]);
 
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
-
-const [request, setRequest] = React.useState(null);
-
-  React.useEffect (() => {
+  useEffect (() => {
     axios.get(baseURL).then((response) => {
       setRequest(response.data);
       console.log(request)
     });
   }, []);
 
-  if(!request) return null;
-
   
-  return isLoaded ?(
+  return (
     <>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-              {request.map(request => (
-                 <Marker 
-                key={request.id}
-                position= {{ lat : request.latitude, lng : request.longitude}}
-                />
-                ))}
-              
-
-      </GoogleMap>
+       <MapContainer center={[41.0082, 28.9784]} zoom={10} scrollWheelZoom={false}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+           {request.map((request , index) => (
+              <Marker key={request.id} position={{ lat : request.latitude, lng : request.longitude}} icon = {markerIcon}>        
+              <Popup>
+                 {request.description}
+              </Popup>
+            </Marker>
+            ))}
+          </MapContainer>
+          <CustomMarker />
       </>
-  )  : <></>
+  ) 
 }
 
-export default React.memo(Location)
+export default Location;

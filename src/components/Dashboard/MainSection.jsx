@@ -7,7 +7,7 @@ import Image from 'react-bootstrap/Image';
 import Help1 from '../../assets/images/help1.jpg';
 import Help2 from '../../assets/images/help2.jpg';
 import banner from '../../assets/images/art-banner.jpg';
-import '../styles/Home.css'
+import '../styles/Home.css';
 
 
 export default function MainSection() {
@@ -19,10 +19,10 @@ export default function MainSection() {
            <br/>
            <Row>
                <Col>
-           <Button variant="warning" size="lg"> Start Today</Button>
+               <Button variant="warning mt-2 p-3" className='action-button' href="/requests"> Start Today</Button>
                </Col>
                <Col>
-           <Button variant="outline-warning" size="lg"> Start Today</Button>
+               <Button variant="warning mt-2 p-3" className='action-button'> Start Today</Button>
                </Col>
            </Row>
 
@@ -39,7 +39,7 @@ export default function MainSection() {
             <Col xs={12} md={6} className='p-5'>
                 <h2>Help people in need today</h2>
                 <p className='lead'>Today you can help people in your area and get help when needed.</p>
-                <Button variant="warning mt-2 p-3" className='action-button'> Start Today</Button>
+                <Button variant="warning mt-2 p-3" className='action-button' href="/requests"> Start Today</Button>
                 
             </Col>
         </Row>

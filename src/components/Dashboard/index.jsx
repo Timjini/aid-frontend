@@ -8,6 +8,7 @@ import AccountEdit from "./Account/AccountEdit";
 import Requests from './Requests';
 import Rooms from "./Rooms";
 import Messages from "./Messages";
+import LocationMarker from "./LocationMarker";
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
           <Route exact path="/requests" component={Requests} />
           <Route exact path="/rooms/:id" component={Rooms} />
           <Route exact path="/messages" component={Messages} />
+          <Route exact path="/location" component={LocationMarker} />
           <Redirect from="/" to="/home" />
         </Switch>
       </Box>
