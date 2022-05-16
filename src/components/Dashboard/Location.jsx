@@ -9,7 +9,8 @@ import L from 'leaflet';
 
 
 
-const baseURL = "http://localhost:3001/api/v1/asks";
+//const baseURL = "http://localhost:3001/api/v1/asks" 
+const baseURL = "https://hidden-eyrie-18402.herokuapp.com/api/v1/asks"
 
 
 

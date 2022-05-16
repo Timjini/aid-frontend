@@ -9,7 +9,9 @@ import {
 import { useUserState } from '../../contexts/user';
 import '../styles/Home.css';
 
-const baseUrl = 'http://localhost:3001/api/v1';
+//const baseUrl = 'http://localhost:3001/api/v1';
+const baseURL = "https://hidden-eyrie-18402.herokuapp.com/api/v1"
+
 
  
 function Messages() {
