@@ -116,3 +116,11 @@
   height: 100vh;
   z-index: 0;
 }
+
+.cardscontainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}

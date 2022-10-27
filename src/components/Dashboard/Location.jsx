@@ -8,62 +8,59 @@ import L from 'leaflet';
 
 
 
-
-//const baseURL = "http://localhost:3001/api/v1/asks" 
-const baseURL = "https://hidden-eyrie-18402.herokuapp.com/api/v1/asks"
-
-
-
-// const kind = 'One time Task' ;
-
-const markerIcon = new L.icon ({
-  iconUrl: require("../../assets/images/money-box.png"),
-  iconSize: [40,40]
-
-});
-
-// const markerIcon2 = new L.icon ({
-//   iconUrl: require("../../assets/images/one-task.png"),
-//   iconSize: [40,40]
-
-// });
-
-// let marker;
-
-// if (kind === 'One time Task') {
-//   marker = markerIcon ;
-//   console.log("marker")
-// }else {
-//   marker = markerIcon2;
-//   console.log("no")
-// }
-
-
+const baseURL = "http://localhost:3001/api/v1/requests" ||"https://hidden-eyrie-18402.herokuapp.com/api/v1/requests";
 
 
 function Location() {
 
 const [request, setRequest] = useState([]);
+const [kind,setKind] = useState('')
+
 
   useEffect (() => {
     axios.get(baseURL).then((response) => {
       setRequest(response.data);
-      console.log(request)
+      console.log(request, 'location')
     });
   }, []);
 
+
+  const markerIcon = new L.icon ({
+    iconUrl: require("../../assets/images/money-box.png"),
+    iconSize: [40,40]
+  
+  });
+  
+  const markerIcon2 = new L.icon ({
+    iconUrl: require("../../assets/images/one-task.png"),
+    iconSize: [40,40]
+  
+  });
+  
+
+
+  let marker;
+  
+  if (kind === "onetime") {
+    marker = markerIcon ;
+    console.log(kind, "kind")
+  }else {
+    marker = markerIcon2;
+    console.log("no match")
+  }
   
   return (
     <>
-       <MapContainer center={[41.0082, 28.9784]} zoom={10} scrollWheelZoom={false}>
+       <MapContainer  className='map' center={[41.0082, 28.9784]} zoom={4} scrollWheelZoom={false}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
            {request.map((request , index) => (
-              <Marker key={request.id} position={{ lat : request.latitude, lng : request.longitude}} icon = {markerIcon}>        
+              <Marker key={request.id} position={{ lat : request.latitude, lng : request.longitude}} icon = {marker}>        
               <Popup>
-                 {request.description}
+                 {request.description}///
+                  {request.kind}
               </Popup>
             </Marker>
             ))}

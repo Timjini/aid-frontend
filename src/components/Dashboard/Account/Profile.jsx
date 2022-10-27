@@ -15,6 +15,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useUserState } from '../../../contexts/user';
+import MyRequests from '../MyRequests';
 
 const Profile = () => {
   const { user } = useUserState();
@@ -32,7 +33,7 @@ const Profile = () => {
   }, [user]);
 
   return (
-    <Flex
+    <><Flex
       minH={'90vh'}
       align={'center'}
       justify={'center'}
@@ -65,7 +66,7 @@ const Profile = () => {
           </Stack>
         </Box>
       </Stack>
-    </Flex>
+    </Flex><MyRequests /></>
   );
 };
 

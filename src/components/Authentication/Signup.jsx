@@ -42,6 +42,7 @@ const Signup = ({ history }) => {
     firstName: '',
     lastName: '',
     password: '',
+    username: '',
     passwordConfirmation: '',
   });
 
@@ -56,7 +57,7 @@ const Signup = ({ history }) => {
   const userDispatch = useUserDispatch();
 
   const handleSubmitExternally = async values => {
-    const { email, firstName, lastName, password, passwordConfirmation } = values;
+    const { email, firstName, lastName,username, password, passwordConfirmation } = values;
     try {
       setLoading(true);
       const {
@@ -67,6 +68,7 @@ const Signup = ({ history }) => {
           first_name: firstName,
           last_name: lastName,
           password: password,
+          username: username,
           password_confirmation: passwordConfirmation,
         },
       });
@@ -203,6 +205,36 @@ const Signup = ({ history }) => {
                             />
                             <FormErrorMessage mt={0}>
                               {form.errors.lastName}
+                            </FormErrorMessage>
+                          </FormControl>
+                        )}
+                      </Field>
+                    </Box>
+
+                    <Box>
+                      <Field
+                        name="username"
+                        validate={validateName}
+                        width={'100%'}
+                      >
+                        {({ field, form }) => (
+                          <FormControl
+                            isInvalid={
+                              form.errors.username && form.touched.username
+                            }
+                          >
+                            <FormLabel htmlFor="username">
+                              Last name *
+                            </FormLabel>
+                            <Input
+                              {...field}
+                              id="username"
+                              placeholder="Username"
+                              value={values.username}
+                              onChange={handleChange}
+                            />
+                            <FormErrorMessage mt={0}>
+                              {form.errors.username}
                             </FormErrorMessage>
                           </FormControl>
                         )}

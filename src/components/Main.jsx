@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { either, isEmpty, isNil } from 'ramda';
 import { initializeLogger } from '../common/logger';
 import Home from './Dashboard/index';
-//import Requests from './Dashboard/Requests';
 import PrivateRoute from './Common/PrivateRoute';
 import PasswordReset from './Authentication/ResetPassword';
 import Login from './Authentication/Login';

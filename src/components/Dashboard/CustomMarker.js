@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 
-const baseURL = "http://localhost:3001/api/v1/asks";
+const baseURL = "http://localhost:3001/api/v1/requests";
 
 const markerIcon = new L.icon ({
   iconUrl: require("../../assets/images/money-box.png"),
@@ -30,7 +30,7 @@ const [data, setData] = useState ('');
 const [kind,setKind] = useState ('') ;
 
 useEffect (() => {
-  axios.get(`http://localhost:3001/api/v1/asks`)
+  axios.get(`http://localhost:3001/api/v1/requests`)
   .then (res => {
     setData(res.data)
     console.log(res.data)
@@ -49,7 +49,6 @@ if (kind === 'One time Task') {
 
     return (
       <>
-        <h1>data</h1>
       </>
         
     )
