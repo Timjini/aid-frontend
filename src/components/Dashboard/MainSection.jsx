@@ -6,19 +6,8 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Help1 from '../../assets/images/help1.jpg';
 import Help2 from '../../assets/images/help2.jpg';
-//import banner from '../../assets/images/art-banner.jpg';
 import {Link} from 'react-router-dom';
 import '../styles/Home.css';
-
-
-
-const features = Array.apply(null, Array(8)).map(function (x, i) {
-  return {
-    id: i,
-    title: 'Lorem ipsum dolor sit amet',
-    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.',
-  };
-});
 
 export default function MainSection() {
   return (

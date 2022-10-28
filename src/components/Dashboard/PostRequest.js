@@ -13,7 +13,7 @@ import {Link} from 'react-router-dom'
 import { useUserState } from '../../contexts/user';
 import RequestList from './RequestList';
 import { Box, Heading, Text } from '@chakra-ui/react';
-import { InfoIcon , AddIcon } from '@chakra-ui/icons';
+import { InfoIcon , AddIcon, leftIcon } from '@chakra-ui/icons';
 import '../styles/Home.css'
 import {
   Drawer,
@@ -31,7 +31,8 @@ import {
   WrapItem,
   Textarea,
   useToast,
-  useDisclosure
+  useDisclosure,
+  withDefaultColorScheme
 } from '@chakra-ui/react'
 
 
@@ -99,14 +100,14 @@ export default function PostRequest () {
   //   }
   // };
 
-  function postData(e) {
-    //e.preventDefault();
+  const postData = async (e) => {
+    e.preventDefault();
     axios
       .post(`${baseUrl}/api/v1/requests`, {
         address,
         description,
         kind,
-        situation
+        situation,
       })
       .then((response) => {
         setData(response.data);
@@ -146,15 +147,15 @@ export default function PostRequest () {
           <Box textAlign="center" py={10} px={6}>
                 <InfoIcon boxSize={'50px'} color={'blue.500'} />
                 <Heading as="h2" size="xl" mt={6} mb={2}>
-                <h2>Number of requests {requests}</h2>
+                Number of requests {requests}
                 </Heading>
                 <Text color={'gray.500'}>
-                 <h3> Welcome <span>{user.first_name} {user.last_name}</span> you can make a difference Today!</h3>
+                  Welcome <span>{user.first_name} {user.last_name}</span> you can make a difference Today!
                 </Text>
               </Box>      
 
                   
-            <Button leftIcon={<AddIcon />} colorScheme='green' onClick={onOpen}>
+            <Button leftIcon={<AddIcon />} color='green' onClick={onOpen}>
             Create a request
             </Button>
               <Drawer
@@ -214,7 +215,7 @@ export default function PostRequest () {
                     <Button variant='outline' mr={3} onClick={onClose}>
                       Cancel
                     </Button>
-                    <Button colorScheme='blue'  
+                    <Button color='blue'  
                         onClick={postData}>
                           Submit
                     </Button>

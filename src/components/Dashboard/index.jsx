@@ -1,5 +1,5 @@
-import React,{useState, useEffect } from "react";
-import { Route, Redirect, Switch,useParams } from "react-router-dom";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 import { Box } from '@chakra-ui/react'
 import Navbar from "../Common/Navbar";
 import MainSection from "./MainSection";
@@ -11,7 +11,7 @@ import Messages from "./Messages";
 import LocationMarker from "./LocationMarker";
 import Users from "./Users";
 import MyRequests from "./MyRequests";
-import RequestDetail from "./Requestdetail";
+//import RequestDetail from "./Requestdetail";
 import Chat from "../Chat/Chat";
 
 const Home = () => {
@@ -29,8 +29,7 @@ const Home = () => {
           <Route exact path="/messages" component={Messages} />
           <Route exact path="/location" component={LocationMarker} />
           <Route exact path="/users" component={Users} />
-          <Route exact path="/my-requests" component={MyRequests} />
-          <Route exact path="/:id" component={RequestDetail} />
+          <Route path="/my-requests" exact component={MyRequests} />
           <Route exact path="/chat" component={Chat} />
         </Switch>
       </Box>

@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react'
 import {MapContainer, TileLayer ,Marker,Popup} from 'react-leaflet';
 import '../styles/Home.css';
 import axios from 'axios';
-import CustomMarker from './CustomMarker';
 import L from 'leaflet';
 
 
@@ -14,13 +13,11 @@ const baseURL = "http://localhost:3001/api/v1/requests" ||"https://hidden-eyrie-
 function Location() {
 
 const [request, setRequest] = useState([]);
-const [kind,setKind] = useState('')
 
 
   useEffect (() => {
     axios.get(baseURL).then((response) => {
       setRequest(response.data);
-      console.log(request, 'location')
     });
   }, []);
 
@@ -67,7 +64,6 @@ const [kind,setKind] = useState('')
               
             )}
           </MapContainer>
-          <CustomMarker />
       </>
   ) 
 }
