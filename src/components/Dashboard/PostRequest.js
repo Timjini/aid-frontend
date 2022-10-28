@@ -11,7 +11,27 @@ import '../styles/Home.css';
 //import { useUserState } from '../../contexts/user';
 import {Link} from 'react-router-dom'
 import { useUserState } from '../../contexts/user';
-
+import RequestList from './RequestList';
+import { Box, Heading, Text } from '@chakra-ui/react';
+import { InfoIcon , AddIcon } from '@chakra-ui/icons';
+import '../styles/Home.css'
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  FormLabel,
+  Stack,
+  Input,
+  Select,
+  Wrap, 
+  WrapItem,
+  Textarea,
+  useDisclosure
+} from '@chakra-ui/react'
 
 
 
@@ -30,6 +50,12 @@ export default function PostRequest () {
   const [kind, setKind] = useState('onetime')
   const [isLoading, setIsLoading] = useState(false);
 
+
+
+//ChakraDrawer 
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const firstField = React.useRef()
+// End
 
 
   useEffect (() => {
@@ -81,102 +107,103 @@ export default function PostRequest () {
     setData(); 
   }
 
+  const updateData = async (id, e) =>{
+    let data = await axios.put(`${baseUrl}/api/v1/requests/${id}`)
+    setData(); 
+
+  }
+
   const changeSituation = (situation) => {
     setSituation(situation)
   }
   data.sort((a, b) => {
     return new Date(b.created_at) - new Date(a.created_at); // descending
   })
-const requests = data.length;
 
 
-
-
-  const arr = data.map(data => {
-    return (
-      <>
-      <div key={data.id} className="cardscontainer">
-
-      <Container className="p-3">
-        <Card>
-        <Card.Header>
-         <h4><Link to={`/requests/${data.id}`}>Request Id :{data.id}</Link> // {data.user.email}</h4>
-        </Card.Header>
-          <Card.Body>
-            <Card.Title>
-            {data.address} <br/>
-            {data.description}
-            </Card.Title>
-        <Card.Text>
-           Kind: {data.kind}
-        </Card.Text>
-            Situation : {data.situation}<br/>      {data.user_id} <br/>
-            <Button variant="primary" type="submit" onClick={() => deleteData(data.id)} >Delete</Button>
-          </Card.Body>
-        </Card>
-      </Container>
-
-      </div>
-      </>
-    )
-  })
-
+  const requests = data.length;
 
     return (
-        <div>
-      <h3>Number of Unfilfilled requests : <span>{requests} // {user.email}</span></h3>
-      
-        <Container className="center mb-5 mt-5">
-        <Form>
-          <Row>
-            <Col>
-            <Form.Group className="mb-3">
-              <Form.Label htmlFor="inputText">Address</Form.Label>
-              <Form.Control
-                  type="text" 
-                  placeholder="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-              />
-            </Form.Group>
-            </Col>
-            <Form.Group className="mb-3">
-                <Form.Label htmlFor="inputText">Description</Form.Label>
-                  <Form.Control
-                    type="text" 
-                    placeholder="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                   />
-            </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label htmlFor="">Choose from the list</Form.Label>
-              <Form.Select id=""
-              value={kind}
-              onChange={(event) => changeKind(event.target.value)}
+        <>
+          <Box textAlign="center" py={10} px={6}>
+                <InfoIcon boxSize={'50px'} color={'blue.500'} />
+                <Heading as="h2" size="xl" mt={6} mb={2}>
+                <h2>Number of requests {requests}</h2>
+                </Heading>
+                <Text color={'gray.500'}>
+                 <h3> Welcome <span>{user.first_name} {user.last_name}</span> you can make a difference Today!</h3>
+                </Text>
+              </Box>      
+
+                  
+            <Button leftIcon={<AddIcon />} colorScheme='green' onClick={onOpen}>
+            Create a request
+            </Button>
+              <Drawer
+                isOpen={isOpen}
+                placement='right'
+                initialFocusRef={firstField}
+                onClose={onClose}
               >
-                <option 
-                    type="text" 
-                    value = "onetime"
-                    >One Time </option>
-                <option   
-                    type="text" 
-                    value= "financial"
-                    >Financial Request</option>
-              </Form.Select>
-            </Form.Group>
-          </Row>
-          <Col md={{ span: 4, offset: 4 }} >
-          <Button type="submit" onClick={postData}>Submit</Button>
-          </Col>
-        </Form>
-        </Container>
-      <Form>
-              <Container>
-              {arr}
-              </Container>
-      </Form>
-      </div>
+                <DrawerOverlay />
+                <DrawerContent>
+                  <DrawerCloseButton />
+                  <DrawerHeader borderBottomWidth='1px'>
+                    Create a request
+                  </DrawerHeader>
+
+                  <DrawerBody>
+                    <Stack spacing='24px'>
+                      <Box>
+                        <FormLabel
+                          htmlFor='address'>Address</FormLabel>
+                        <Input
+                          ref={firstField}
+                          placeholder="address"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                        />
+                      </Box>
+                      <Box>
+                        <FormLabel htmlFor='owner'>Select Type</FormLabel>
+                        <Select id='owner' defaultValue='segun' 
+                        value={kind}
+                        onChange={(event) => changeKind(event.target.value)}
+                        >
+                          <option 
+                            type="text" 
+                            value = "onetime">One Time</option>
+                          <option
+                            type="text" 
+                            value= "financial"
+                            >Financial Request</option>
+                        </Select>
+                      </Box>
+
+                      <Box>
+                        <FormLabel htmlFor='desc'>Description</FormLabel>
+                        <Textarea 
+                            id='desc'           
+                            placeholder="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            />
+                      </Box>
+                    </Stack>
+                  </DrawerBody>
+
+                  <DrawerFooter borderTopWidth='1px'>
+                    <Button variant='outline' mr={3} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button colorScheme='blue' onClick={postData}>Submit</Button>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+
+                    <RequestList />     
+
+        </>
     )
 }

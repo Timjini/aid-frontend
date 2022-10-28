@@ -11,6 +11,15 @@ import {Link} from 'react-router-dom';
 import '../styles/Home.css';
 
 
+
+const features = Array.apply(null, Array(8)).map(function (x, i) {
+  return {
+    id: i,
+    title: 'Lorem ipsum dolor sit amet',
+    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.',
+  };
+});
+
 export default function MainSection() {
   return (
     <>
@@ -30,7 +39,7 @@ export default function MainSection() {
             <Col xs={12} md={6} className='help1 p-5'>
                 <Image src={Help1} className='img-fluid' />
             </Col>
-            <Col xs={12} md={6} className='p-5'>
+            <Col xs={12} md={6} className='p-5 mx-auto my-auto'>
                 <h2>Help people in need today</h2>
                 <p className='lead'>Today you can help people in your area and get help when needed.</p>
                 <Button variant="warning mt-2 p-3" className='action-button' href="/requests"> Get Help Now</Button>
@@ -42,7 +51,7 @@ export default function MainSection() {
 <section className='section-2'>
         <Container>
             <Row>
-                <Col xs={12} md={6} className='p-5'>
+                <Col xs={12} md={6} className='p-5 mx-auto my-auto'>
                     <h2 className='text-white'>Help people in need today</h2>
                     <p className='lead text-white'>Today you can help people in your area and get help when needed.</p>
                     <Button variant="warning mt-2 p-3" className='action-button' href="/requests"> Have You helped some one ?</Button>

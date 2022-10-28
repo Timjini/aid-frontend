@@ -117,10 +117,13 @@
   z-index: 0;
 }
 
-.cardscontainer {
+.cards-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  justify-items: center;
+}
+
+.cards-container>* {
+  flex: 1 1 160px;
 }
