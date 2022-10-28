@@ -36,18 +36,7 @@ const [kind,setKind] = useState('')
     iconSize: [40,40]
   
   });
-  
 
-
-  let marker;
-  
-  if (kind === "onetime") {
-    marker = markerIcon ;
-    console.log(kind, "kind")
-  }else {
-    marker = markerIcon2;
-    console.log("no match")
-  }
   
   return (
     <>
@@ -56,14 +45,27 @@ const [kind,setKind] = useState('')
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-           {request.map((request , index) => (
-              <Marker key={request.id} position={{ lat : request.latitude, lng : request.longitude}} icon = {marker}>        
+           {request.map((request , index) => {
+              if( request.kind === 'onetime' )
+              return (
+              <Marker key={request.id} position={{ lat : request.latitude, lng : request.longitude}} icon = {markerIcon}>        
               <Popup>
-                 {request.description}///
-                  {request.kind}
+                 {request.description} & {request.kind}
               </Popup>
             </Marker>
-            ))}
+            )
+            else
+            return (
+            <Marker key={request.id} position={{ lat : request.latitude, lng : request.longitude}} icon = {markerIcon2}>        
+              <Popup>
+                 {request.description} & {request.kind}
+              </Popup>
+            </Marker>
+            )
+
+           }
+              
+            )}
           </MapContainer>
           <CustomMarker />
       </>

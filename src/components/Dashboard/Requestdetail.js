@@ -55,7 +55,7 @@ function RequestDetail() {
           }
           setData([data,...response])
         } catch (error) {
-          alert("An error has occurred");
+          alert("You have reached maximum requests");
           setIsLoading(false);
         }
       };
@@ -66,6 +66,7 @@ function RequestDetail() {
       const changeSituation = (situation) => {
         //setSituation(situation)
       }
+
 
   return (
     <>          

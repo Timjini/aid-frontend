@@ -30,6 +30,7 @@ import {
   Wrap, 
   WrapItem,
   Textarea,
+  useToast,
   useDisclosure
 } from '@chakra-ui/react'
 
@@ -66,37 +67,51 @@ export default function PostRequest () {
     })
   }, [])
 
-  const postData = async (e) => {
-    e.preventDefault();
-    if (!address.trim() || !description.trim()) {
-      alert("address or description is invalid");
-      return;
-    }
-    setIsLoading(false);
-    try {
-      //
-      const response = await axios.post(`${baseUrl}/api/v1/requests`, {
+  // const postData = async (e) => {
+  //   e.preventDefault();
+  //   if (!address.trim() || !description.trim()) {
+  //     alert("address or description is invalid");
+  //     return;
+  //   }
+  //   setIsLoading(false);
+  //   try {
+  //     //
+  //     const response = await axios.post(`${baseUrl}/api/v1/requests`, {
+  //       address,
+  //       description,
+  //       kind,
+  //       situation
+  //     });
+  //     if (response.status === 201) {
+  //       alert(` You have created: ${JSON.stringify(response.data)}`);
+  //       setIsLoading(false);
+  //       setAddress('');
+  //       setDescription('');
+  //       setSituation();
+  //       setKind({})
+  //     } else {
+  //       throw new Error("An error has occurred");
+  //     }
+  //     setData([data,...response])
+  //   } catch (error) {
+  //     alert("An error has occurred");
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  function postData(e) {
+    //e.preventDefault();
+    axios
+      .post(`${baseUrl}/api/v1/requests`, {
         address,
         description,
         kind,
         situation
+      })
+      .then((response) => {
+        setData(response.data);
       });
-      if (response.status === 201) {
-        alert(` You have created: ${JSON.stringify(response.data)}`);
-        setIsLoading(false);
-        setAddress('');
-        setDescription('');
-        setSituation();
-        setKind({})
-      } else {
-        throw new Error("An error has occurred");
-      }
-      setData([data,...response])
-    } catch (error) {
-      alert("An error has occurred");
-      setIsLoading(false);
-    }
-  };
+  }
 
   const changeKind = (kind) =>{
     setKind(kind)
@@ -119,6 +134,8 @@ export default function PostRequest () {
   data.sort((a, b) => {
     return new Date(b.created_at) - new Date(a.created_at); // descending
   })
+
+  const toast = useToast()
 
 
   const requests = data.length;
@@ -197,7 +214,10 @@ export default function PostRequest () {
                     <Button variant='outline' mr={3} onClick={onClose}>
                       Cancel
                     </Button>
-                    <Button colorScheme='blue' onClick={postData}>Submit</Button>
+                    <Button colorScheme='blue'  
+                        onClick={postData}>
+                          Submit
+                    </Button>
                   </DrawerFooter>
                 </DrawerContent>
               </Drawer>

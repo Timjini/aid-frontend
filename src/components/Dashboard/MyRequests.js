@@ -9,7 +9,7 @@ export default function MyRequests(){
     const [data, setData] = useState ([])
 
     useEffect (() => {
-      axios.get(`${baseUrl}/api/v1/requests/11`)
+      axios.get(`${baseUrl}/api/v1/requests`)
       .then (res => {
         setData(res.data)
         console.log(res.data)
