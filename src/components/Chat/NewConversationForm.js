@@ -17,7 +17,10 @@ class NewConversationForm extends React.Component {
       headers: HEADERS,
       body: JSON.stringify(this.state)
     });
-    this.setState({ title: '' });
+    this.setState({ title: '' })
+    .then((data) => {
+      console.log(data)
+    })
   };
 
   render = () => {

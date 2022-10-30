@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { ActionCable } from 'react-actioncable-provider';
 import { API_ROOT } from '../../constant/index';
 import NewConversationForm from './NewConversationForm';
-import Cable from './Cable';
 import MessagesArea from './MessagesArea';
+import Cable from './Cable';
 
 class ConversationsList extends React.Component {
   state = {
@@ -25,7 +26,9 @@ class ConversationsList extends React.Component {
     const { conversation } = response;
     this.setState({
       conversations: [...this.state.conversations, conversation]
+      
     });
+    console.log(conversation)
   };
 
   handleReceivedMessage = response => {

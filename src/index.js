@@ -1,19 +1,19 @@
-//import { ColorModeScript } from '@chakra-ui/react';
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { ActionCableProvider } from 'react-actioncable-provider';
+import {API_WS_ROOT} from './constant/index'
+import ActionCable from 'actioncable';
+//import { useUserState } from './contexts/user';
 
-//import GoogleApiWrapper from 'google-map-react';
 
-// App = GoogleApiWrapper({
-//   apiKey: "AIzaSyD8_QKqZNpfYJQqelOONNrLoK7Jb4em2mM",
-//   language: "EN"
-// })(App);
-
+const cable = ActionCable.createConsumer(`${API_WS_ROOT}`);
 
 ReactDOM.render(
   <StrictMode>
-     <App />
-  </StrictMode>,
+    <ActionCableProvider cable={cable}>
+      <App  />
+    </ActionCableProvider>
+      </StrictMode>,
   document.getElementById('root')
 );

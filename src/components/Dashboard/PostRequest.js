@@ -45,11 +45,12 @@ const baseUrl = `http://localhost:3001`;
 export default function PostRequest () {
   const { user } = useUserState();
 
-  const [data, setData] = useState ([])
-  const [description, setDescription] = useState ('')
-  const [address, setAddress] = useState ('')
-  const [situation, setSituation] = useState('pending')
-  const [kind, setKind] = useState('onetime')
+  const [data, setData] = useState ([]);
+  //const [requests, setRequests] = useState([]);
+  const [description, setDescription] = useState ('');
+  const [address, setAddress] = useState ('');
+  const [situation, setSituation] = useState('pending');
+  const [kind, setKind] = useState('onetime');
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -101,7 +102,8 @@ export default function PostRequest () {
   // };
 
   const postData = async (e) => {
-    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     axios
       .post(`${baseUrl}/api/v1/requests`, {
         address,
@@ -110,7 +112,7 @@ export default function PostRequest () {
         situation,
       })
       .then((response) => {
-        setData(response.data);
+        setData([...data,response.data]);
       });
   }
 
@@ -132,9 +134,9 @@ export default function PostRequest () {
   const changeSituation = (situation) => {
     setSituation(situation)
   }
-  data.sort((a, b) => {
-    return new Date(b.created_at) - new Date(a.created_at); // descending
-  })
+  // data.sort((a, b) => {
+  //   return new Date(b.created_at) - new Date(a.created_at); // descending
+  // })
 
   const toast = useToast()
 
@@ -222,9 +224,10 @@ export default function PostRequest () {
                   </DrawerFooter>
                 </DrawerContent>
               </Drawer>
-
-                    <RequestList />     
-
+            
+            <RequestList />
         </>
     )
+
+    
 }

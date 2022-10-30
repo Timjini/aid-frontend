@@ -7,15 +7,11 @@ import {
   Input,
   Stack,
   Link as ChakraLink,
-  Button,
   Heading,
   useColorModeValue,
-  HStack,
-  FormErrorMessage,
-  useToast,
+
 } from '@chakra-ui/react';
 import { useUserState } from '../../../contexts/user';
-import MyRequests from '../MyRequests';
 
 const Profile = () => {
   const { user } = useUserState();
@@ -66,7 +62,8 @@ const Profile = () => {
           </Stack>
         </Box>
       </Stack>
-    </Flex><MyRequests /></>
+    </Flex>
+    </>
   );
 };
 

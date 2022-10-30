@@ -41,6 +41,12 @@ export default function MyRequests(){
       setRequests(); 
     }
 
+    // const myRequests = () => {
+    //   if(requests.data.array === 0)
+    //   return <h1>No requests</h1>
+    // }
+
+
   return (
     <><h1 className='display-5 p-2'>My Requests</h1>
       <div>
@@ -63,7 +69,8 @@ export default function MyRequests(){
              )
              else 
             return (
-              <></>
+              <>
+              </>
             )
           })}
       </div>

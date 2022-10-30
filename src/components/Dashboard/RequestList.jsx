@@ -17,7 +17,7 @@ const baseUrl = `http://localhost:3001`;
 
 
 export default function RequestList() {
-    const [data, setData] = useState ([])
+    const [requests, setRequets] = useState ([])
 
 
 
@@ -25,7 +25,7 @@ export default function RequestList() {
   useEffect (() => {
     axios.get(`${baseUrl}/api/v1/requests`)
     .then (res => {
-      setData(res.data)
+      setRequets(res.data)
       console.log(res.data)
     })
   }, [])
@@ -34,11 +34,11 @@ export default function RequestList() {
   return (
     
     <Center py={6}>
-      {data.map((data, index) => (
+      {requests.map((request, index) => (
         
          
         <Box
-        key={data.id}
+        key={request.id}
         maxW={'320px'}
         w={'full'}
         boxShadow={'2xl'}
@@ -47,15 +47,15 @@ export default function RequestList() {
         textAlign={'center'}>
 
         <Heading fontSize={'2xl'} fontFamily={'body'}>
-          {data.user.first_name} {data.user.last_name}
+          {request.user.first_name} {request.user.last_name}
         </Heading>
         <Text fontWeight={600} color={'gray.500'} mb={4}>
-          @{data.user.username}
+          @{request.user.username}
         </Text>
         <Text
           textAlign={'center'}
           px={3}>
-          {data.description}
+          {request.description}
         </Text>
 
         <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
@@ -63,19 +63,19 @@ export default function RequestList() {
             px={2}
             py={1}
             fontWeight={'400'}>
-            #{data.kind}
+            #{request.kind}
           </Badge>
           <Badge
             px={2}
             py={1}
             fontWeight={'400'}>
-            #{data.situation}
+            #{request.situation}
           </Badge>
           <Badge
             px={2}
             py={1}
             fontWeight={'400'}>
-            #{data.address}
+            #{request.address}
           </Badge>
         </Stack>
 
