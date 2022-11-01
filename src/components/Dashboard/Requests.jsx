@@ -1,6 +1,6 @@
 import React from 'react';
 import Location from './Location';
-import PostRequest from './PostRequest';
+import CreateRequest from './CreateRequest';
 
 function Requests(){
   
@@ -9,7 +9,7 @@ function Requests(){
   return (
       <>
         <Location />
-        <PostRequest />
+        <CreateRequest />
       </>
   )
 }

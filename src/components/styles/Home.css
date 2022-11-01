@@ -127,3 +127,26 @@
 .cards-container>* {
   flex: 1 1 160px;
 }
+
+
+/* side bar for chat page */
+.conversationsList {
+  display: flex;
+  flex-direction: column;
+}
+.cablestyle{
+  background-color: aqua;
+}
+
+.css-73qwd9 {
+  width: 60vw!important;
+  height: 78vh!important;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.newConversationForm {
+
+}

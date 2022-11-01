@@ -13,6 +13,7 @@ import Users from "./Users";
 import MyRequests from "./MyRequests";
 //import RequestDetail from "./Requestdetail";
 import ConversationsList from '../Chat/ConversationsList';
+import Chat from '../Chat/Chat'
 
 const Home = ({cable}) => {
 
@@ -31,6 +32,7 @@ const Home = ({cable}) => {
           <Route exact path="/location" component={LocationMarker} />
           <Route exact path="/users" component={Users} />
           <Route path="/my-requests" exact component={MyRequests} />
+          <Route path="/chat" component={Chat} />
         </Switch>
       </Box>
     </>

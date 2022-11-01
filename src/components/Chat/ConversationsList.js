@@ -5,14 +5,17 @@ import { API_ROOT } from '../../constant/index';
 import NewConversationForm from './NewConversationForm';
 import MessagesArea from './MessagesArea';
 import Cable from './Cable';
+import '../styles/Home.css'
 
 class ConversationsList extends React.Component {
   state = {
     conversations: [],
+    messages: [],
     activeConversation: null
   };
 
   componentDidMount = () => {
+
     fetch(`${API_ROOT}/conversations`)
       .then(res => res.json())
       .then(conversations => this.setState({ conversations }));
@@ -28,7 +31,6 @@ class ConversationsList extends React.Component {
       conversations: [...this.state.conversations, conversation]
       
     });
-    console.log(conversation)
   };
 
   handleReceivedMessage = response => {
@@ -38,35 +40,39 @@ class ConversationsList extends React.Component {
       conversation => conversation.id === message.conversation_id
     );
     conversation.messages = [...conversation.messages, message];
-    this.setState({ conversations });
+    this.setState({ conversations });console.log(conversations)
   };
 
   render = () => {
     const { conversations, activeConversation } = this.state;
     return (
+
+      <>
+    
       <div className="conversationsList">
-        <ActionCable
-          channel={{ channel: 'ConversationsChannel' }}
-          onReceived={this.handleReceivedConversation}
-        />
-        {this.state.conversations.length ? (
-          <Cable
-            conversations={conversations}
-            handleReceivedMessage={this.handleReceivedMessage}
-          />
-        ) : null}
-        <h2>Conversations</h2>
-        <ul>{mapConversations(conversations, this.handleClick)}</ul>
-        <NewConversationForm />
-        {activeConversation ? (
-          <MessagesArea
-            conversation={findActiveConversation(
-              conversations,
-              activeConversation
-            )}
-          />
-        ) : null}
-      </div>
+        <div className='cable'>
+          <ActionCable
+            channel={{ channel: 'ConversationsChannel' }}
+            onReceived={this.handleReceivedConversation} />
+        </div>
+          {this.state.conversations.length ? (
+            <Cable
+              conversations={conversations}
+              handleReceivedMessage={this.handleReceivedMessage}
+              className="cablestyle"
+               />
+          ) : null}
+          <h2>Conversations</h2>
+          <ul>{mapConversations(conversations, this.handleClick)}</ul>
+          <NewConversationForm />
+          {activeConversation ? (
+            <MessagesArea
+              conversation={findActiveConversation(
+                conversations,
+                activeConversation
+              )} />
+          ) : null}
+        </div></>
     );
   };
 }
@@ -84,7 +90,7 @@ const findActiveConversation = (conversations, activeConversation) => {
 const mapConversations = (conversations, handleClick) => {
   return conversations.map(conversation => {
     return (
-      <li key={conversation.id} onClick={() => handleClick(conversation.id)}>
+      <li key={conversation.id} onClick={() => handleClick(conversation.id)} style={{color: "#1c4966",textTransform:"uppercase"}}>
         {conversation.title}
       </li>
     );

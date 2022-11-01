@@ -3,7 +3,7 @@ import { API_ROOT, HEADERS } from '../../constant/index';
 
 class NewConversationForm extends React.Component {
   state = {
-    title: ''
+    title: '',
   };
 
   handleChange = e => {
@@ -17,7 +17,7 @@ class NewConversationForm extends React.Component {
       headers: HEADERS,
       body: JSON.stringify(this.state)
     });
-    this.setState({ title: '' })
+    this.setState({ title: ''})
     .then((data) => {
       console.log(data)
     })
@@ -25,18 +25,31 @@ class NewConversationForm extends React.Component {
 
   render = () => {
     return (
-      <div className="newConversationForm">
-        <form onSubmit={this.handleSubmit}>
-          <label>New Conversation:</label>
-          <br />
-          <input
-            type="text"
-            value={this.state.title}
-            onChange={this.handleChange}
-          />
-          <input type="submit" />
-        </form>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-md-4'>
+        <div className="newConversationForm">
+          <form onSubmit={this.handleSubmit}>
+            <label>New Conversation:</label>
+            <br />
+            <input
+              type="text"
+              value={this.state.title}
+              onChange={this.handleChange}  
+              className="form-control"
+            />
+                        <input
+              type="text"
+              value={this.state.message}
+              onChange={this.handleChange}  
+              className="form-control"
+            />
+            <input type="submit" className='btn btn-success' />
+          </form>
+          </div>
+        </div>
       </div>
+    </div>
     );
   };
 }

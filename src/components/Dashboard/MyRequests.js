@@ -35,16 +35,6 @@ export default function MyRequests(){
       }
     }
 
-    const deleteData = async (id, e) => {
-      //e.preventDefault();
-      let request = await axios.delete(`${baseUrl}/17`)
-      setRequests(); 
-    }
-
-    // const myRequests = () => {
-    //   if(requests.data.array === 0)
-    //   return <h1>No requests</h1>
-    // }
 
 
   return (
@@ -53,19 +43,20 @@ export default function MyRequests(){
           {requests?.map((request,index)  => {
              if (user.username === request.user.username)
              return(
-            <Container className="p-3" key={user}>
+          <div key={request.id}>
+            <Container className="p-3" >
               <Card className="text-center">
-                <Card.Header>{request.user.username} // {request.id}</Card.Header>
+                <Card.Header><h2>{request.user.username}</h2> <h5>{request.id}</h5> </Card.Header>
                 <Card.Body>
                   <Card.Title>{request.address}</Card.Title>
                   <Card.Text>
                    {request.description}
                   </Card.Text>
-                  <Button variant="primary" onClick={deleteData}>Delete</Button>
                 </Card.Body>
-                <Card.Footer className="text-muted">{request.situation}</Card.Footer>
+                <Card.Footer className="text-muted">{request.situation} <br/> <p>This request will be deleted in 24 hours.</p></Card.Footer>
               </Card>
             </Container>
+            </div>
              )
              else 
             return (

@@ -23,13 +23,13 @@ const [request, setRequest] = useState([]);
 
 
   const markerIcon = new L.icon ({
-    iconUrl: require("../../assets/images/money-box.png"),
+    iconUrl: require("../../assets/images/one-task.png"),
     iconSize: [40,40]
   
   });
   
   const markerIcon2 = new L.icon ({
-    iconUrl: require("../../assets/images/one-task.png"),
+    iconUrl: require("../../assets/images/money-box.png"),
     iconSize: [40,40]
   
   });
