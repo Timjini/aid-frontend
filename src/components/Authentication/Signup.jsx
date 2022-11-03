@@ -44,6 +44,7 @@ const Signup = ({ history }) => {
     password: '',
     username: '',
     passwordConfirmation: '',
+    avatar: '',
   });
 
   // const [email, setEmail] = useState('');
@@ -57,7 +58,7 @@ const Signup = ({ history }) => {
   const userDispatch = useUserDispatch();
 
   const handleSubmitExternally = async values => {
-    const { email, firstName, lastName,username, password, passwordConfirmation } = values;
+    const { email, firstName, lastName,username, password, passwordConfirmation,avatar } = values;
     try {
       setLoading(true);
       const {
@@ -70,6 +71,7 @@ const Signup = ({ history }) => {
           password: password,
           username: username,
           password_confirmation: passwordConfirmation,
+          avatar: avatar,
         },
       });
       authDispatch({
@@ -96,6 +98,12 @@ const Signup = ({ history }) => {
       setLoading(false);
     }
   };
+
+  const handleFileUpload = (e) => {
+    this.setState({
+       image: e.target.files[0]
+    })
+    }
 
   return (
     <Flex
@@ -224,7 +232,7 @@ const Signup = ({ history }) => {
                             }
                           >
                             <FormLabel htmlFor="username">
-                              Last name *
+                              Username *
                             </FormLabel>
                             <Input
                               {...field}
@@ -299,7 +307,11 @@ const Signup = ({ history }) => {
                         )}
                       </Field>
                     </Box>
-
+                          <input
+                          type="file"
+                          accept="image/jpeg" /// for images
+                          onChange={handleFileUpload}
+                          />
                     <Stack spacing={10}>
                       <Button
                       isLoading={loading}

@@ -11,7 +11,7 @@ import {
   Badge,
 } from '@chakra-ui/react';
 import '../styles/Home.css';
-
+import { Link } from 'react-router-dom';
 
 const baseUrl = `http://localhost:3001`;
 
@@ -38,7 +38,7 @@ export default function RequestList() {
         
          
         <Box
-        key={request.id}
+        key={request}
         maxW={'320px'}
         w={'full'}
         boxShadow={'2xl'}
@@ -80,23 +80,11 @@ export default function RequestList() {
         </Stack>
 
         <Stack mt={8} direction={'row'} spacing={4}>
-          <Button
-            flex={1}
-            fontSize={'sm'}
-            rounded={'full'}
-            bg={'blue.400'}
-            color={'white'}
-            boxShadow={
-              '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-            }
-            _hover={{
-              bg: 'blue.500',
-            }}
-            _focus={{
-              bg: 'blue.500',
-            }}>
-            Help
-          </Button>
+              <Link to={`/request/${request.id}`}
+              className="btn btn-primary"
+              >
+              Help
+              </Link>
         </Stack>
 
         </Box>

@@ -38,13 +38,7 @@ class NewConversationForm extends React.Component {
               onChange={this.handleChange}  
               className="form-control"
             />
-                        <input
-              type="text"
-              value={this.state.message}
-              onChange={this.handleChange}  
-              className="form-control"
-            />
-            <input type="submit" className='btn btn-success' />
+            <button type="submit" className='btn btn-success'>Send</button>
           </form>
           </div>
         </div>

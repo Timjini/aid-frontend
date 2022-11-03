@@ -9,6 +9,9 @@ const logout = () => axios.delete(`${baseUrl}api/v1/logout`);
 
 const signup = payload => axios.post(`${baseUrl}api/v1/users`, payload);
 
+const getUsers = payload => axios.get(`${baseUrl}api/v1/users`, payload);
+
+
 const request = payload => axios.post(`${baseUrl}api/v1/requests`, payload);
 
 const getrequest = payload => axios.get(`${baseUrl}api/v1/requests`, payload);
@@ -20,7 +23,8 @@ const authenticationApi = {
   logout,
   signup,
   request,
-  getrequest
+  getrequest,
+  getUsers
 };
 
 export default authenticationApi;

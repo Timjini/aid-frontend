@@ -11,9 +11,10 @@ import Messages from "./Messages";
 import LocationMarker from "./LocationMarker";
 import Users from "./Users";
 import MyRequests from "./MyRequests";
-//import RequestDetail from "./Requestdetail";
+import RequestDetail from "./Requestdetail";
 import ConversationsList from '../Chat/ConversationsList';
-import Chat from '../Chat/Chat'
+import Chat from '../Chat/Chat';
+import Fulfillment from "./Fullfilment";
 
 const Home = ({cable}) => {
 
@@ -32,6 +33,8 @@ const Home = ({cable}) => {
           <Route exact path="/location" component={LocationMarker} />
           <Route exact path="/users" component={Users} />
           <Route path="/my-requests" exact component={MyRequests} />
+          <Route path="/requests/:id" component={RequestDetail} />
+          <Route path="/fulfillment" component ={Fulfillment} />
           <Route path="/chat" component={Chat} />
         </Switch>
       </Box>

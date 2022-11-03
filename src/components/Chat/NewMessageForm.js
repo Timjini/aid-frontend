@@ -29,7 +29,7 @@ class NewMessageForm extends React.Component {
   render = () => {
     return (
 
-      <div classNameName="newMessageForm">
+      <div className="newMessageForm">
         <form onSubmit={this.handleSubmit}>
           <label>New Message:</label>
           <br />

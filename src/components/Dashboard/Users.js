@@ -1,26 +1,42 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const baseUrl = `http://localhost:3001`
+const baseUrl = `http://localhost:3001/api/v1/requests/`
 
 
 function Users () {
 
-  const [item, setItem] = useState<null | []>(null);
+  const [fulfillments, setFulfillments] = useState ([])
+  const [data, setData]= useState([]);
+  const [text, setText] = useState([]);
+  const [request_id, setRequest_id] = useState(21)
 
-  const getData = async () => {
-    const response = await axios.get(
-      `${baseUrl}/api/v1/users`
-    );
-    setItem(response.data);
-  };
+  useEffect (() => {
+    axios.get(`http://localhost:3001/api/v1/requests/${request_id}/fulfillments`)
+    .then (res => {
+      setFulfillments(res.data)
+      console.log(res.data)
+    })
+  }, [])
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const postData = async (e) => {
+    axios
+      .post(`http://localhost:3001/api/v1/requests/${request_id}/fulfillments`, {
+        text,
+        request_id,
+      })
+      .then((response) => {
+        setData([...data,response.data]);
+      });
+  }
+
 
       return (
-        <h1>Users</h1>
+          <form>
+            <input value={text} onChange={(e) => setText(e.target.value)} />
+            <input value={request_id} onChange={(e) => setRequest_id(e.target.value)} />            
+            <button onClick={postData}>Send</button>
+          </form>
         )
 
 }

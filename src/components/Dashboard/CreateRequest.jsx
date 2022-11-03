@@ -1,64 +1,47 @@
 import React,{useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
 import {
   Select,
-  useDisclosure,
   FormControl,
   FormLabel,
   Input,
   Button
 } from '@chakra-ui/react';
-import { InfoIcon , AddIcon, leftIcon } from '@chakra-ui/icons';
-import { useUserState } from '../../contexts/user';
-import {Formik} from 'formik';
-//import {setAuthHeaders} from '../../apis/authentication';
-import authenticationApi from '../../apis/authentication';
 import { setAuthHeaders } from '../../apis/axios';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'http://localhost:3001/api/v1/requests'
 
 
 function CreateRequest(){
-
-    const { user } = useUserState();
 
     const [requests, setRequests] = useState([]);
     const [description, setDescription] = useState ('');
     const [address, setAddress] = useState ('');
     const [situation, setSituation] = useState('pending');
     const [kind, setKind] = useState('onetime');
-    const history = useHistory();
-
-    //ChakraDrawer 
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const firstField = React.useRef()
-// End
 
     useEffect(() => {
-        const fetchRequests = async() => {
-            try{
-                const response = await authenticationApi.getrequest();
-                setRequests(response.data);
-                console.log(response);
-
-            }catch (err) {
-                if(err.response){
-                    console.log(err.response.data.message)
-                }else {
-                    console.log(`Error : ${err.message}`)
-                }
-            }
-        }
         fetchRequests();
-    },[])
+      }, []);
+    const fetchRequests = () => {
+        axios
+          .get(`${baseUrl}`)
+          .then((res) => {
+            console.log(res);
+            setRequests(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
 
     const handleSubmit = async (e) => {
         //e.preventDefault();
         const newRequest = {description, address, kind,situation}
         try{
-            const response = await axios.post(`${baseUrl}/api/v1/requests`, newRequest);
+            const response = await axios.post(`${baseUrl}`, newRequest);
             setAuthHeaders();
             const allRequests = [...requests, response.data];
             setRequests(allRequests);
@@ -121,18 +104,24 @@ function CreateRequest(){
                 </form>
         </div>
            
-                {requests.map((request, index) => (
-                    <div className='p-2'>
-                    <Card key={request.id}>
-                            <Card.Header>{request.user.username}</Card.Header>
+                {requests.map((el) => (
+                    <div className='p-2 ml-5 mr-5'>
+                    <Card key={el.id}>
+                            <Card.Header>{el.user.username}</Card.Header>
                             <Card.Body>
-                            <Card.Title>{request.address}</Card.Title>
+                            <Card.Title><span style={{fontWeight : "600"}}>Address:</span>{el.address}</Card.Title>
                             <Card.Text>
-                               {request.description}<br/>
-                               {request.kind}
+                            <span style={{fontWeight : "600"}}>Description:</span>{el.description}<br/>
+                               <span style={{fontWeight : "600"}}>Type Of Request: </span>{el.kind} <br/>
                             </Card.Text>
-                            <Button  color='teal' mt={4} >Help</Button>
+                            <br/>
+                            <Link to={`/requests/${el.id}`}
+                                className="btn btn-primary"
+                                >
+                                Help
+                                </Link>
                             </Card.Body>
+                            {el.fulfillments?.text}
                     </Card>
                     </div>
 
