@@ -32,8 +32,8 @@ export default function RequestList() {
 
 
   return (
-    
     <Center py={6}>
+
       {requests.map((request, index) => (
         
          

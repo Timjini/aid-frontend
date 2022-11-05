@@ -1,13 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import useAxios from '../../apis/useAxios';
 import Messages from './Messages';
 import axios from 'axios'
 import Form from 'react-bootstrap/Form';
 import { useEffect, useState} from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { useUserState } from '../../contexts/user';
@@ -30,7 +28,7 @@ function Rooms() {
       return;
     }
     try {
-      const response = await axios.post(`${baseUrl}api/v1/rooms/${id}/messages`, {
+      const response = await axios.post(`${baseUrl}api/v1/rooms/${id}/tweets`, {
         body,
       });
       if (response.status === 201) {

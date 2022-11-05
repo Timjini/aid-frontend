@@ -1,18 +1,27 @@
 import React,{ useEffect, useState} from 'react';
 import axios from "axios";
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
 import { setAuthHeaders } from '../../apis/axios';
-
+import {useUserState} from '../../contexts/user'
+import authenticationApi from '../../apis/authentication';
+import { useAuthDispatch } from '../../contexts/auth';
+import { useUserDispatch } from '../../contexts/user';
+import {
+  useToast,
+} from '@chakra-ui/react';
+import Requests from './Requests';
 
 
 
 const baseUrl = `http://localhost:3001/api/v1/requests`
+const baseUrl1 = `http://localhost:3001/api/v1/fulfillments`
 
 function RequestDetail({match}) {
   const [request, setRequests] = useState({ user: {} });
-  const [fulfillment, setFulfillments] = useState({});
   const [text, setText] = useState([]);
+  const [data, setData] = useState({user: {}});
+  const [request_id, setRequest_id] = useState(match.params.id);
+
+  
 
   useEffect(() => {
     fetchRequest();
@@ -29,41 +38,72 @@ const fetchRequest = () => {
     .catch((err) => console.log(err));
 };
 
+useEffect(() => {
+    fetchData();
+}, []);
+const fetchData = () => {
+  axios
+    .get(
+      `${baseUrl1}`
+    )
+    .then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err));
+};
 
-const handleSubmit = async (e) => {
-  //e.preventDefault();
-  const newfulfillment = {text}
-  try{
-      const response = await axios.post(`${baseUrl}/${match.params.id}/fulfillments`, newfulfillment);
-      setAuthHeaders();
-      const allFullfilments = [...fulfillment, response.data];
-      setFulfillments(allFullfilments);
-      setText('');
-  } catch (err) {
-      console.log(`Error: ${err.message}`);
-  }
+const postData = async (e) => {
+axios
+  .post(`${baseUrl1}`, {
+    text,
+    request_id
+  })
+  .then((response) => {
+    setData([...data,response.data]);
+  });
 }
 
 
   return (
-    <>  
-            <Container className="p-5">
-              <Card key={request.id}>
-                            <Card.Header>{request.user?.username} {request.fullfilments?.text}</Card.Header>
-                            <Card.Body>
-                            <Card.Title>
-                            <span style={{fontWeight : "600"}}>Address</span> {request.address}</Card.Title>
-                            <Card.Text>
-                               <span style={{fontWeight : "600"}}>Description</span> : {request.description}<br/>
-                               <span style={{fontWeight : "600"}}>Type of Request</span> : {request.kind}
-                            </Card.Text>
-                            <form>
-                              <input value={text} onChange={(e) => setText(e.target.value)} />
-                              <button onClick={handleSubmit}>Send</button>
-                            </form>
-                            </Card.Body>
-                    </Card>
-            </Container>  
+    <>
+      <div className="container p-5" key={request.id}>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="card">
+              <div className="card-body">
+                <h3 className="card-title">REQUEST</h3>
+                <p className="card-text"><span style={{fontWeight:"600"}}> Description :</span>{request.description}</p>
+                <p className="card-text"><span style={{fontWeight:"600"}}> Address :</span>{request.address}</p>
+                <p className="card-text"><span style={{fontWeight:"600"}}> Kind :</span> {request.kind}</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{request.user?.username}</h5>
+                <p className="card-text">{request.user?.email}</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">Fulfillments</h5>
+                <p className="card-text">{request.fulfillments?.map((fulfillment) => (
+                  <div key={fulfillment.id}>
+                    <p>{fulfillment.text}</p>
+                  </div>
+                ))}</p>
+              </div>
+            </div>
+            <form className='pt-2'>
+                  <input className='form-control' value={text} onChange={(e) => setText(e.target.value)} />
+                  <input className='form-control'  type="hidden" value={request_id} onChange={(e) => setRequest_id(e.target.value)} />
+                  <button onClick={postData} className="btn btn-primary mt-2">Send</button>
+                </form>
+          </div>
+        </div>
+      </div>
        
     </>
   );

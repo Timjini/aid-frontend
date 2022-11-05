@@ -17,8 +17,8 @@ const MessagesArea = ({
     <div className="messagesArea">
       <h2>{title}</h2>
       <ul>{(messages)}</ul>
-      <NewMessageForm conversation_id={id} />
       <li>{messages}</li>
+      <NewMessageForm conversation_id={id} />
     </div>
   );
 };

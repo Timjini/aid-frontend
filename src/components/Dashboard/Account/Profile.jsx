@@ -15,7 +15,7 @@ import { useUserState } from '../../../contexts/user';
 
 const Profile = () => {
   const { user } = useUserState();
-
+  console.log(user);
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');

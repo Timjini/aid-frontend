@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const useAxios = (url) => {
 
-  const [data, setData] = useState([]) 
+  const [data, setData] = useState({ user: {} }) 
   const [loading, setLoading] = useState (true)
 
     useEffect(() => {

@@ -15,11 +15,16 @@ import RequestDetail from "./Requestdetail";
 import ConversationsList from '../Chat/ConversationsList';
 import Chat from '../Chat/Chat';
 import Fulfillment from "./Fullfilment";
+import { AuthProvider } from '../../contexts/auth';
+import { UserProvider } from '../../contexts/user';
 
 const Home = ({cable}) => {
 
   return (
     <>
+    
+    <AuthProvider>
+    <UserProvider>
       <Navbar />
       <Box>
         <Switch>
@@ -34,10 +39,14 @@ const Home = ({cable}) => {
           <Route exact path="/users" component={Users} />
           <Route path="/my-requests" exact component={MyRequests} />
           <Route path="/requests/:id" component={RequestDetail} />
-          <Route path="/fulfillment" component ={Fulfillment} />
+          <Route path="/requests/:id/fulfillment/:id" component={Fulfillment} />
+          <Route path="/fulfillments" component ={Fulfillment} />
           <Route path="/chat" component={Chat} />
         </Switch>
       </Box>
+      
+    </UserProvider>
+    </AuthProvider>
     </>
   );
 };

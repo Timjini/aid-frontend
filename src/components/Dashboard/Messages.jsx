@@ -1,53 +1,73 @@
 import React,{ useEffect,useState }  from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import useAxios from '../../apis/useAxios';
 import {
         ToastContainer,
         Toast,
         Container
 } from 'react-bootstrap';
-import { useUserState } from '../../contexts/user';
 import '../styles/Home.css';
+import axios from 'axios';
+import {useUserState} from '../../contexts/user';
+import { Avatar } from '@chakra-ui/react';
 
 const baseUrl = 'http://localhost:3001/api/v1' || "https://hidden-eyrie-18402.herokuapp.com/api/v1";
 
 
  
 function Messages() {
-    const [position, setPosition] = useState('top-start');
-     const { id } = useParams();
-     const {data , loading} = useAxios(`${baseUrl}/rooms/`+id);
-     const { user } = useUserState();
 
-        return (
-            
-            <div>
-            {loading && <div>Loading...</div>}
-              {data.map (data => (
-                  <>
-                  <Container key={data.user_id}>
+     const { id } = useParams();
+     const [message, setMessages] = useState([{user:{}}]);
+     const { user } = useUserState();
+     const contact = user ? `${user.first_name} ${user.last_name}` : 'user';
+     const [position, setPosition] = useState('top-right');
+
+    
+    
+          useEffect(() => {
+          fetchMessages();
+        }, []);
+        const fetchMessages = () => {
+          axios
+            .get(`${baseUrl}/rooms/1/tweets`)
+            .then((res) => {
+              console.log(res);
+              setMessages(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        };
+  
+    return (
+            <>
+              {message.map((message) => (
+                  <Container key={message.user_id}>
                     <div
                     aria-live="polite"
                     aria-atomic="true"
                     className="bg-dark position-relative"
                     style={{ minHeight: '150px' }}
                     >
-                    <ToastContainer className="p-3 box" position={position} >
+                    <ToastContainer className="p-3 box" position={message.user_id === user.id ? setPosition : 'bottom-center' }>
                     <Toast>
                         <Toast.Header closeButton={false}>
-                        <strong className="me-auto">{data.user_id}</strong>
-                        <small>{data.updated_at}</small>
+                        <Avatar size={'sm'} name={contact} />
+                        <strong className="me-auto">{message.user?.username}</strong>
+                        <small>{message.updated_at}</small>
                         </Toast.Header>
-                        <Toast.Body>{data.body}</Toast.Body>
+                        <Toast.Body>{message.body}</Toast.Body>
                     </Toast>
                     </ToastContainer>
                     </div>
                     </Container>
-                    </>
-              ))}
-            </div>
-        )
+                    ))}
 
+              </>
+        )
 }
 
+
 export default Messages;
+
+

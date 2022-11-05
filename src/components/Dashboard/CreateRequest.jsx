@@ -4,12 +4,24 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Button
+  Button,
+  Stat,
+  StatLabel,
+  StatNumber,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  Tooltip,
 } from '@chakra-ui/react';
 import { setAuthHeaders } from '../../apis/axios';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+
 
 const baseUrl = 'http://localhost:3001/api/v1/requests'
 
@@ -74,11 +86,42 @@ function CreateRequest(){
     setKind(kind)
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const firstField = React.useRef()
+
+  let data = requests.length
+  let pending = requests.fulfillments?.length
+
     return (
         <>
+        <div className="container pt-2">
+        <Stat>
+          <StatLabel>Total Requests</StatLabel>
+          <StatNumber>{data}</StatNumber>
+          <StatNumber>{pending}</StatNumber>
+        </Stat>
+        </div>
+        <Tooltip hasArrow label='Click to Add' bg='gray.300' color='black'>
+            <Button colorScheme='teal' onClick={onOpen}>
+            + Create a Request
+            </Button>
+        </Tooltip>
+       
+      <Drawer
+        isOpen={isOpen}
+        placement='right'
+        initialFocusRef={firstField}
+        onClose={onClose}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader borderBottomWidth='1px'>
+            Create a new account
+          </DrawerHeader>
 
-        <div className="p-5">
-        <form onSubmit={handleSubmit}> 
+          <DrawerBody>
+          <form onSubmit={handleSubmit}> 
         <FormControl>
             <FormLabel>Address</FormLabel>
             <Input type="text" value={address} onChange={(e) => setAddress(e.target.value)}/>
@@ -102,8 +145,12 @@ function CreateRequest(){
                     Submit
           </Button>
                 </form>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+        <div className="p-5">
+        
         </div>
-           
                 {requests.map((el) => (
                     <div className='p-2 ml-5 mr-5'>
                     <Card key={el.id}>
@@ -114,6 +161,7 @@ function CreateRequest(){
                             <span style={{fontWeight : "600"}}>Description:</span>{el.description}<br/>
                                <span style={{fontWeight : "600"}}>Type Of Request: </span>{el.kind} <br/>
                             </Card.Text>
+                            <p>  </p>
                             <br/>
                             <Link to={`/requests/${el.id}`}
                                 className="btn btn-primary"
@@ -121,7 +169,7 @@ function CreateRequest(){
                                 Help
                                 </Link>
                             </Card.Body>
-                            {el.fulfillments?.text}
+                            
                     </Card>
                     </div>
 

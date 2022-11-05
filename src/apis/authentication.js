@@ -16,6 +16,9 @@ const request = payload => axios.post(`${baseUrl}api/v1/requests`, payload);
 
 const getrequest = payload => axios.get(`${baseUrl}api/v1/requests`, payload);
 
+const postFulfillment = payload => axios.post(`${baseUrl}api/v1/requests`, payload);
+
+
 
 
 const authenticationApi = {
@@ -24,7 +27,8 @@ const authenticationApi = {
   signup,
   request,
   getrequest,
-  getUsers
+  getUsers,
+  postFulfillment
 };
 
 export default authenticationApi;
