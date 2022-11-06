@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {user} from '../../contexts/user'
-import { useUserState } from '../../contexts/user';
+import { API_FULFILLMENTS } from '../../constant';
 
-const baseUrl = `http://localhost:3001/api/v1/fulfillments/`
+
 
 
 function Fulfillment (match) {
@@ -18,7 +17,7 @@ function Fulfillment (match) {
     const fetchRequest = () => {
       axios
         .get(
-          `${baseUrl}`
+          `${API_FULFILLMENTS}`
         )
         .then((res) => {
           setData(res.data);
@@ -29,7 +28,7 @@ function Fulfillment (match) {
 
   const postData = async (e) => {
     axios
-      .post(`http://localhost:3001/api/v1/fulfillments`, {
+      .post(`${API_FULFILLMENTS}`, {
         text,
         request_id
       })

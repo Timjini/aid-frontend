@@ -4,10 +4,9 @@ import {MapContainer, TileLayer ,Marker,Popup} from 'react-leaflet';
 import '../styles/Home.css';
 import axios from 'axios';
 import L from 'leaflet';
+import {API_REQUESTS} from '../../constant/index'
 
 
-
-const baseURL = "http://localhost:3001/api/v1/requests" ||"https://hidden-eyrie-18402.herokuapp.com/api/v1/requests";
 
 
 function Location() {
@@ -16,7 +15,7 @@ const [request, setRequest] = useState([]);
 
 
   useEffect (() => {
-    axios.get(baseURL).then((response) => {
+    axios.get(API_REQUESTS).then((response) => {
       setRequest(response.data);
     });
   }, []);

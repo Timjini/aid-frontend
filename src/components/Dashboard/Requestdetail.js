@@ -9,17 +9,18 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import Requests from './Requests';
+import { API_REQUESTS } from '../../constant';
+import { API_FULFILLMENTS } from '../../constant';
 
-
-
-const baseUrl = `http://localhost:3001/api/v1/requests`
-const baseUrl1 = `http://localhost:3001/api/v1/fulfillments`
+const baseUrl = 'http://localhost:3001/api/v1/rooms'
 
 function RequestDetail({match}) {
   const [request, setRequests] = useState({ user: {} });
   const [text, setText] = useState([]);
   const [data, setData] = useState({user: {}});
   const [request_id, setRequest_id] = useState(match.params.id);
+  const [rooms, setRooms] = useState([]);
+  const [name, setName] = useState([]);
 
   
 
@@ -29,7 +30,7 @@ function RequestDetail({match}) {
 const fetchRequest = () => {
   axios
     .get(
-      `${baseUrl}/${match.params.id}`
+      `${API_REQUESTS}/${match.params.id}`
     )
     .then((res) => {
       setRequests(res.data);
@@ -44,7 +45,7 @@ useEffect(() => {
 const fetchData = () => {
   axios
     .get(
-      `${baseUrl1}`
+      `${API_FULFILLMENTS}`
     )
     .then((res) => {
       setData(res.data);
@@ -55,12 +56,21 @@ const fetchData = () => {
 
 const postData = async (e) => {
 axios
-  .post(`${baseUrl1}`, {
+  .post(`${API_FULFILLMENTS}`, {
     text,
     request_id
   })
   .then((response) => {
     setData([...data,response.data]);
+  });
+}
+
+const createRoom = async (e) => {
+  axios.post(`${baseUrl}`, {
+    request_id,
+    name,
+  }).then((response) => {
+    setRooms([...rooms, response.data]);
   });
 }
 
@@ -92,6 +102,7 @@ axios
                 <p className="card-text">{request.fulfillments?.map((fulfillment) => (
                   <div key={fulfillment.id}>
                     <p>{fulfillment.text}</p>
+                    <p>{fulfillment.user?.username}</p>
                   </div>
                 ))}</p>
               </div>
@@ -104,7 +115,12 @@ axios
           </div>
         </div>
       </div>
-       
+      <form >
+
+        <input className='form-control' value={name} onChange={(e) => setName(e.target.value)} />
+        <input className='form-control'  type="hidden" value={request_id} onChange={(e) => setRequest_id(e.target.value)} />
+        <button onClick={createRoom} className="btn btn-primary mt-2">Create Room</button>
+      </form>
     </>
   );
 };

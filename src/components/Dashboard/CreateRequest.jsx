@@ -20,13 +20,10 @@ import {
 } from '@chakra-ui/react';
 import { setAuthHeaders } from '../../apis/axios';
 import axios from 'axios';
-import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
 import RequestList from './RequestList.tsx';
 import {API_REQUESTS} from '../../constant/index'
 
 
-const baseUrl = 'http://localhost:3001/api/v1/requests'
 
 
 function CreateRequest(){
@@ -60,7 +57,7 @@ function CreateRequest(){
         //e.preventDefault();
         const newRequest = {description, address, kind,situation}
         try{
-            const response = await axios.post(`${baseUrl}`, newRequest);
+            const response = await axios.post(`${API_REQUESTS}`, newRequest);
             setAuthHeaders();
             const allRequests = [...requests, response.data];
             setRequests(allRequests);
