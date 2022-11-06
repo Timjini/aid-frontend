@@ -4,3 +4,4 @@ export const HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
 };
+export const API_REQUESTS = 'http://localhost:3001/api/v1/requests';

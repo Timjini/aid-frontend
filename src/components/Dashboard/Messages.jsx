@@ -9,6 +9,8 @@ import '../styles/Home.css';
 import axios from 'axios';
 import {useUserState} from '../../contexts/user';
 import { Avatar } from '@chakra-ui/react';
+import '../styles/Home.css';
+
 
 const baseUrl = 'http://localhost:3001/api/v1' || "https://hidden-eyrie-18402.herokuapp.com/api/v1";
 
@@ -17,12 +19,11 @@ const baseUrl = 'http://localhost:3001/api/v1' || "https://hidden-eyrie-18402.he
 function Messages() {
 
      const { id } = useParams();
-     const [message, setMessages] = useState([{user:{}}]);
+     const [messages, setMessages] = useState([{user:{}}]);
      const { user } = useUserState();
-     const contact = user ? `${user.first_name} ${user.last_name}` : 'user';
      const [position, setPosition] = useState('top-right');
-
-    
+     const [user_id, setUser_id] = useState(useUserState().user.id);
+      const [messageBody, setMessageBody] = useState('');
     
           useEffect(() => {
           fetchMessages();
@@ -40,31 +41,34 @@ function Messages() {
         };
   
     return (
-            <>
-              {message.map((message) => (
-                  <Container key={message.user_id}>
-                    <div
-                    aria-live="polite"
-                    aria-atomic="true"
-                    className="bg-dark position-relative"
-                    style={{ minHeight: '150px' }}
-                    >
-                    <ToastContainer className="p-3 box" position={message.user_id === user.id ? setPosition : 'bottom-center' }>
-                    <Toast>
-                        <Toast.Header closeButton={false}>
-                        <Avatar size={'sm'} name={contact} />
-                        <strong className="me-auto">{message.user?.username}</strong>
-                        <small>{message.updated_at}</small>
-                        </Toast.Header>
-                        <Toast.Body>{message.body}</Toast.Body>
-                    </Toast>
-                    </ToastContainer>
-                    </div>
-                    </Container>
-                    ))}
+                <>
 
-              </>
-        )
+              {messages.map((message) => {
+                                if (message.user.username === user.username)
+                                {
+                                  return(
+                                    <div className="media media-chat">
+                                    <div className="media-body">
+                                      <p>{message.body}</p>
+                                      <p className="meta"><time dateTime="2018">{message.user.username}</time></p>
+                                    </div>
+                                  </div>
+                                  )
+ 
+                                } else {
+                                  return (
+                                    <div className="media media-chat media-chat-reverse">
+                                    <div className="media-body">
+                                      <p>{message.body}</p>
+                                      <p className="meta"><time dateTime="2018">{message.user.username}</time></p>
+                                    </div>
+                                  </div>
+                                  )
+                               
+                                }                  
+                               })}
+                               </>
+                                )
 }
 
 

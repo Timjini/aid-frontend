@@ -28,7 +28,7 @@ function Rooms() {
       return;
     }
     try {
-      const response = await axios.post(`${baseUrl}api/v1/rooms/${id}/tweets`, {
+      const response = await axios.post(`${baseUrl}api/v1/rooms/2/tweets`, {
         body,
       });
       if (response.status === 201) {
@@ -45,26 +45,33 @@ function Rooms() {
 
 
   return (
-    <Container>
-    <>
+    <div className="page-content page-container" id="page-content">
+                <div className="padding">
+                    <div className="row container d-flex justify-content-center">
+                        <div className="col-md-6">
+                                    <div className="card card-bordered">
+                                        <div className="card-header">
+                                        <h4 className="card-title"><strong>Chat</strong></h4>
+                                        </div>
     <Messages />
-    <Form>
-      <Row className='p-2'>
-        <Col sm={8} md={8} className='p-2'>
-          <Form.Group className="mb-3">
-            <Form.Control
-              type="text"
-              placeholder="message ..."
-              value={body}
-              onChange={(e) => setBody(e.target.value)} />
-          </Form.Group>
-        </Col>
-      <Col sm={4} md={4} className='p-2' >
-        <Button type="submit" onClick={postBody}>Send</Button>
-      </Col>
-      </Row>
-    </Form></>
-    </Container>
+    <div className="ps-scrollbar-x-rail"><div className="ps-scrollbar-x" tabindex="0"></div></div>
+                                  <div className="ps-scrollbar-y-rail">
+                                    <div className="ps-scrollbar-y" tabindex="0" ></div></div></div>
+
+                                  <div className="publisher bt-1 border-light">
+                                    <img className="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="..." />
+                                    <input className="publisher-input" type="text" placeholder="message ..."
+                                      value={body}
+                                      onChange={(e) => setBody(e.target.value)} />
+                                    <span className="publisher-btn file-group">
+                                      <button type="submit" onClick={postBody}>Send</button>
+                                    </span>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                        </div>
   )
 
 }

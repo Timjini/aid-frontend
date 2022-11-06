@@ -17,6 +17,8 @@ import Chat from '../Chat/Chat';
 import Fulfillment from "./Fullfilment";
 import { AuthProvider } from '../../contexts/auth';
 import { UserProvider } from '../../contexts/user';
+import CreateRoom from './CreateRoom';
+import Footer from "../Common/Footer.tsx";
 
 const Home = ({cable}) => {
 
@@ -28,6 +30,7 @@ const Home = ({cable}) => {
       <Navbar />
       <Box>
         <Switch>
+          <Route exact path="/home" component={MainSection} />
           <Route exact path="/" component={MainSection} />
           <Route path="/conversations" component={ConversationsList}  />
           <Route exact path="/account/edit" component={AccountEdit} />
@@ -42,9 +45,10 @@ const Home = ({cable}) => {
           <Route path="/requests/:id/fulfillment/:id" component={Fulfillment} />
           <Route path="/fulfillments" component ={Fulfillment} />
           <Route path="/chat" component={Chat} />
+          <Route path="/new-room" component={CreateRoom} />
         </Switch>
       </Box>
-      
+      <Footer />
     </UserProvider>
     </AuthProvider>
     </>

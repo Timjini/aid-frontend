@@ -3,31 +3,33 @@ import React, { useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import Messages from "./Messages";
+import axios from "axios";
 
-const Chat = () => {
-  const [messages, setMessages] = useState([
-	{ from: "computer", text: "Hi, My Name is HoneyChat" },
-	{ from: "me", text: "Hey there" },
-	{ from: "me", text: "Myself Ferin Patel" },
-	{
-  	from: "computer",
-  	text: "Nice to meet you. You can send me message and i'll reply you with same message.",
-	},
-  ]);
-  const [inputMessage, setInputMessage] = useState("");
+const baseUrl = `http://localhost:3001/`
 
-  const handleSendMessage = () => {
-	if (!inputMessage.trim().length) {
-  	return;
-	}
-	const data = inputMessage;
+function Chat () {
+  const [messages, setMessages] = useState([]);
+  const [body, setBody] = useState("");
 
-	setMessages((old) => [...old, { from: "me", text: data }]);
-	setInputMessage("");
-
-	setTimeout(() => {
-  	setMessages((old) => [...old, { from: "computer", text: data }]);
-	}, 1000);
+  const postBody = async (e) => {
+    if (!body.trim()) {
+      alert("address or description is invalid");
+      return;
+    }
+    try {
+      const response = await axios.post(`${baseUrl}api/v1/rooms/1/tweets`, {
+        body,
+      });
+      if (response.status === 201) {
+        alert(` You have created: ${JSON.stringify(response.body)}`);
+        setBody('');
+      } else {
+        throw new Error("An error has occurred");
+      }
+      setBody([body,...response])
+    } catch (error) {
+      alert("An error has occurred");
+    }
   };
 
   return (
@@ -36,9 +38,9 @@ const Chat = () => {
     	<Header />
     	<Messages messages={messages} />
     	<Footer
-      	inputMessage={inputMessage}
-      	setInputMessage={setInputMessage}
-      	handleSendMessage={handleSendMessage}
+      	inputMessage={messages}
+      	setInputMessage={setMessages}
+      	handleSendMessage={postBody}
     	/>
   	</Flex>
 	</Flex>

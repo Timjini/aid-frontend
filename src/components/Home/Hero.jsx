@@ -44,7 +44,7 @@ export default function CallToActionWithVideo() {
           </Heading>
           <Flex justifyContent="center" textAlign="left">
            <p>Helping people never been better and easier. </p>
-            <p>Username : pirate@gmail.com <br/>
+            <p>Username : user@gmail.com <br/>
             Password: 123456 </p> <br/>
           </Flex>
           <Stack

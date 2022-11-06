@@ -16,30 +16,37 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Tooltip,
+  
 } from '@chakra-ui/react';
 import { setAuthHeaders } from '../../apis/axios';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import RequestList from './RequestList.tsx';
+import {API_REQUESTS} from '../../constant/index'
 
 
 const baseUrl = 'http://localhost:3001/api/v1/requests'
 
 
 function CreateRequest(){
-
     const [requests, setRequests] = useState([]);
     const [description, setDescription] = useState ('');
     const [address, setAddress] = useState ('');
     const [situation, setSituation] = useState('pending');
     const [kind, setKind] = useState('onetime');
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const firstField = React.useRef()
+
+  let data = requests.length
+  let pending = requests.fulfillments?.length
 
     useEffect(() => {
         fetchRequests();
       }, []);
     const fetchRequests = () => {
         axios
-          .get(`${baseUrl}`)
+          .get(`${API_REQUESTS}`)
           .then((res) => {
             console.log(res);
             setRequests(res.data);
@@ -65,32 +72,10 @@ function CreateRequest(){
             console.log(`Error: ${err.message}`);
         }
     }
-
-
-    // const postData = async (e) => {
-    //     e.preventDefault();
-    //     axios
-    //       .post(`${baseUrl}/api/v1/requests`, {
-    //         address,
-    //         description,
-    //         kind,
-    //         situation,
-    //       })
-    //       .then((response) => {
-    //         setData([...data,response.data]);
-    //       });
-    //       setData();
-    //   }
     
       const changeKind = (kind) =>{
     setKind(kind)
   }
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const firstField = React.useRef()
-
-  let data = requests.length
-  let pending = requests.fulfillments?.length
 
     return (
         <>
@@ -148,32 +133,8 @@ function CreateRequest(){
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-        <div className="p-5">
-        
-        </div>
-                {requests.map((el) => (
-                    <div className='p-2 ml-5 mr-5'>
-                    <Card key={el.id}>
-                            <Card.Header>{el.user.username}</Card.Header>
-                            <Card.Body>
-                            <Card.Title><span style={{fontWeight : "600"}}>Address:</span>{el.address}</Card.Title>
-                            <Card.Text>
-                            <span style={{fontWeight : "600"}}>Description:</span>{el.description}<br/>
-                               <span style={{fontWeight : "600"}}>Type Of Request: </span>{el.kind} <br/>
-                            </Card.Text>
-                            <p>  </p>
-                            <br/>
-                            <Link to={`/requests/${el.id}`}
-                                className="btn btn-primary"
-                                >
-                                Help
-                                </Link>
-                            </Card.Body>
-                            
-                    </Card>
-                    </div>
 
-        ))}
+        <RequestList />
         
         </>
     )
