@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3001/';
-//const baseUrl = 'https://hidden-eyrie-18402.herokuapp.com/';
+// const baseUrl = 'http://localhost:3001/';
+const baseUrl = 'https://hidden-eyrie-18402.herokuapp.com/';
 
 const login = payload => axios.post(`${baseUrl}api/v1/login`, payload);
 
