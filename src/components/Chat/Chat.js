@@ -5,7 +5,8 @@ import Header from "./Header";
 import Messages from "./Messages";
 import axios from "axios";
 
-const baseUrl = `http://localhost:3001/`
+//const baseUrl = `http://localhost:3001/`
+const baseUrl = `https://hidden-eyrie-18402.herokuapp.com/`
 
 function Chat () {
   const [messages, setMessages] = useState([]);
