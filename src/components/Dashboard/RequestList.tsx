@@ -11,8 +11,9 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import {API_REQUESTS} from '../../constant/index';
 
-const baseUrl = 'http://localhost:3001/api/v1/requests'
+//const baseUrl = 'http://localhost:3001/api/v1/requests'
 
 
 export default function RequestList () {
@@ -23,7 +24,7 @@ export default function RequestList () {
   }, []);
 const fetchRequests = () => {
     axios
-      .get(`${baseUrl}`)
+      .get(`${API_REQUESTS}`)
       .then((res) => {
         console.log(res);
         setRequests(res.data);
