@@ -4,9 +4,8 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Messages from "./Messages";
 import axios from "axios";
+import { API_TWEETS } from "../../constant";
 
-//const baseUrl = `http://localhost:3001/`
-const baseUrl = `https://hidden-eyrie-18402.herokuapp.com/`
 
 function Chat () {
   const [messages, setMessages] = useState([]);
@@ -18,7 +17,7 @@ function Chat () {
       return;
     }
     try {
-      const response = await axios.post(`${baseUrl}api/v1/rooms/1/tweets`, {
+      const response = await axios.post(`${API_TWEETS}`, {
         body,
       });
       if (response.status === 201) {

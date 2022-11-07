@@ -3,6 +3,7 @@ import { Flex, Input, Button } from "@chakra-ui/react";
 import axios from "axios";
 import {useUserState} from '../../contexts/user';
 import { setAuthHeaders } from "../../apis/axios";
+import { API_TWEETS } from "../../constant";
 
 const baseUrl = 'http://localhost:3001/';
 
@@ -19,7 +20,7 @@ const Footer = ({ inputMessage, setInputMessage, handleSendMessage }) => {
     const fetchtweets = () => {
       axios
         .get(
-			`${baseUrl}api/v1/rooms/2/tweets`
+			`${API_TWEETS}`
         )
         .then((res) => {
 			setTweets(res.data);
@@ -38,7 +39,7 @@ const Footer = ({ inputMessage, setInputMessage, handleSendMessage }) => {
 		return;
 		}
 		try {
-		const response = await axios.post(`${baseUrl}api/v1/rooms/2/tweets`, {
+		const response = await axios.post(`${API_TWEETS}`, {
 			body,
 		});
 		if (response.status === 200) {

@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Avatar, Flex, Text, Tooltip } from "@chakra-ui/react";
 import axios from "axios";
 import { useUserState } from "../../contexts/user";
+import { API_TWEETS } from "../../constant";
 
-const baseUrl = 'http://localhost:3001/api/v1' || "https://hidden-eyrie-18402.herokuapp.com/api/v1";
+
 
 
 const Messages = () => {
@@ -24,7 +25,7 @@ const Messages = () => {
 	 }, []);
 	 const fetchMessages = () => {
 	   axios
-		 .get(`${baseUrl}/rooms/1/tweets`)
+		 .get(`${API_TWEETS}`)
 		 .then((res) => {
 		   console.log(res);
 		   setMessages(res.data);
