@@ -44,7 +44,6 @@ const Signup = ({ history }) => {
     password: '',
     username: '',
     passwordConfirmation: '',
-    avatar: '',
   });
 
   // const [email, setEmail] = useState('');
@@ -58,7 +57,7 @@ const Signup = ({ history }) => {
   const userDispatch = useUserDispatch();
 
   const handleSubmitExternally = async values => {
-    const { email, firstName, lastName,username, password, passwordConfirmation,avatar } = values;
+    const { email, firstName, lastName,username, password, passwordConfirmation } = values;
     try {
       setLoading(true);
       const {
@@ -71,7 +70,6 @@ const Signup = ({ history }) => {
           password: password,
           username: username,
           password_confirmation: passwordConfirmation,
-          avatar: avatar,
         },
       });
       authDispatch({
@@ -307,11 +305,6 @@ const Signup = ({ history }) => {
                         )}
                       </Field>
                     </Box>
-                          <input
-                          type="file"
-                          accept="image/jpeg" /// for images
-                          onChange={handleFileUpload}
-                          />
                     <Stack spacing={10}>
                       <Button
                       isLoading={loading}
