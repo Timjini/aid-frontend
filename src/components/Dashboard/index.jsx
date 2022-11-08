@@ -12,8 +12,6 @@ import RequestDetail from "./Requestdetail";
 import ConversationsList from '../Chat/ConversationsList';
 import Chat from '../Chat/Chat';
 import Fulfillment from "./Fullfilment";
-import { AuthProvider } from '../../contexts/auth';
-import { UserProvider } from '../../contexts/user';
 import CreateRoom from './CreateRoom';
 import Footer from "../Common/Footer.tsx";
 import DocumentUpload from './DocumentUpload';
@@ -22,9 +20,7 @@ const Home = ({cable}) => {
 
   return (
     <>
-    
-    <AuthProvider>
-    <UserProvider>
+
       <Navbar />
       <Box>
         <Switch>
@@ -45,8 +41,6 @@ const Home = ({cable}) => {
         </Switch>
       </Box>
       <Footer />
-    </UserProvider>
-    </AuthProvider>
     </>
   );
 };

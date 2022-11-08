@@ -16,6 +16,7 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Tooltip,
+  Textarea
   
 } from '@chakra-ui/react';
 import { setAuthHeaders } from '../../apis/axios';
@@ -110,7 +111,7 @@ function CreateRequest(){
         </FormControl>
         <FormControl>
             <FormLabel>Description</FormLabel>
-            <Input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
+            <Textarea type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
         </FormControl>
                     <FormControl>
                     <FormLabel>Request Type</FormLabel>
