@@ -5,6 +5,7 @@ import '../styles/Home.css';
 import axios from 'axios';
 import L from 'leaflet';
 import {API_REQUESTS} from '../../constant/index'
+import useGeoLocation from './useGeoLocation';
 
 
 
@@ -12,6 +13,7 @@ import {API_REQUESTS} from '../../constant/index'
 function Location() {
 
 const [request, setRequest] = useState([]);
+// const location = useGeoLocation()
 
 
   useEffect (() => {
@@ -36,7 +38,7 @@ const [request, setRequest] = useState([]);
   
   return (
     <>
-       <MapContainer  className='map' center={[41.0082, 28.9784]} zoom={4} scrollWheelZoom={false}>
+       <MapContainer  className='map' center={[41.0082, 28.9784]} zoom={12} scrollWheelZoom={false}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
