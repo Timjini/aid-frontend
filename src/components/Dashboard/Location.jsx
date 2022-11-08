@@ -1,20 +1,24 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 //import { GoogleMap, useJsApiLoader, Marker} from '@react-google-maps/api';
 import {MapContainer, TileLayer ,Marker,Popup} from 'react-leaflet';
 import '../styles/Home.css';
 import axios from 'axios';
 import L from 'leaflet';
 import {API_REQUESTS} from '../../constant/index'
-import useGeoLocation from './useGeoLocation';
-
-
+import 'leaflet/dist/leaflet.css';
+import {useGeolocated} from 'react-geolocated';
 
 
 function Location() {
-
 const [request, setRequest] = useState([]);
-// const location = useGeoLocation()
-
+const mapRef = useRef();
+const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+useGeolocated({
+    positionOptions: {
+        enableHighAccuracy: false,
+    },
+    userDecisionTimeout: 5000,
+});
 
   useEffect (() => {
     axios.get(API_REQUESTS).then((response) => {
@@ -36,9 +40,13 @@ const [request, setRequest] = useState([]);
   });
 
   
-  return (
+  return !isGeolocationAvailable ? (
+    <div>Your browser does not support Geolocation</div>
+) : !isGeolocationEnabled ? (
+    <div>Geolocation is not enabled</div>
+) : coords ? (
     <>
-       <MapContainer  className='map' center={[41.0082, 28.9784]} zoom={12} scrollWheelZoom={false}>
+       <MapContainer  ref={mapRef} className='map' center={[coords.latitude,coords.longitude]} zoom={14} scrollWheelZoom={false}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -66,7 +74,8 @@ const [request, setRequest] = useState([]);
             )}
           </MapContainer>
       </>
-  ) 
-}
-
+  ): (
+    <div>Getting the location data&hellip; </div>
+);
+};
 export default Location;

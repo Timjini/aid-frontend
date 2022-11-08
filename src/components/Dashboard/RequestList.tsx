@@ -3,7 +3,6 @@ import {
   Avatar,
   Box,
   chakra,
-  Container,
   Flex,
   Icon,
   SimpleGrid,
@@ -56,7 +55,7 @@ const fetchRequests = () => {
           fontFamily={'Work Sans'}
           fontWeight={'bold'}
           color={useColorModeValue('gray.700', 'gray.50')}>
-          Make a difference in your community
+          Make a difference<br/> in your community
         </chakra.h1>
         <chakra.h2
           margin={'auto'}

@@ -9,8 +9,6 @@ import Requests from './Requests';
 import Users from "./Users";
 import MyRequests from "./MyRequests";
 import RequestDetail from "./Requestdetail";
-import { AuthProvider } from '../../contexts/auth';
-import { UserProvider } from '../../contexts/user';
 import Footer from "../Common/Footer.tsx";
 import DocumentUpload from './DocumentUpload';
 
@@ -19,8 +17,6 @@ const Home = ({cable}) => {
   return (
     <>
     
-    <AuthProvider>
-    <UserProvider>
       <Navbar />
       <Box>
         <Switch>
@@ -36,8 +32,6 @@ const Home = ({cable}) => {
         </Switch>
       </Box>
       <Footer />
-    </UserProvider>
-    </AuthProvider>
     </>
   );
 };

@@ -5,9 +5,6 @@ import {
   FormLabel,
   Input,
   Button,
-  Stat,
-  StatLabel,
-  StatNumber,
   Drawer,
   DrawerBody,
   DrawerHeader,
@@ -36,8 +33,6 @@ function CreateRequest(){
     const { isOpen, onOpen, onClose } = useDisclosure()
     const firstField = React.useRef()
 
-  let data = requests.length
-  let pending = requests.fulfillments?.length
 
     useEffect(() => {
         fetchRequests();
@@ -77,19 +72,13 @@ function CreateRequest(){
 
     return (
         <>
-        <div className="container pt-2">
-        <Stat>
-          <StatLabel>Total Requests</StatLabel>
-          <StatNumber>{data}</StatNumber>
-          <StatNumber>{pending}</StatNumber>
-        </Stat>
-        </div>
+      <div className="container p-2">
         <Tooltip hasArrow label='Click to Add' bg='gray.300' color='black'>
             <Button colorScheme='teal' onClick={onOpen}>
             + Create a Request
             </Button>
         </Tooltip>
-       
+      </div> 
       <Drawer
         isOpen={isOpen}
         placement='right'
