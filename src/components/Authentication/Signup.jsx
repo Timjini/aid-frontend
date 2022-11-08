@@ -77,6 +77,7 @@ const Signup = ({ history }) => {
         payload: { auth_token, email, is_admin: false },
       });
       userDispatch({ type: 'SET_USER', payload: { user } });
+      setAuthHeaders();
       history.push('/');
       toast({
         description: 'Sign up successfully.',
@@ -97,11 +98,11 @@ const Signup = ({ history }) => {
     }
   };
 
-  const handleFileUpload = (e) => {
-    this.setState({
-       image: e.target.files[0]
-    })
-    }
+  // const handleFileUpload = (e) => {
+  //   this.setState({
+  //      image: e.target.files[0]
+  //   })
+  //   }
 
   return (
     <Flex

@@ -7,6 +7,9 @@ export const setAuthHeaders = (setLoading = () => null) => {
   axios.defaults.headers = {
     Accept: 'applicaion/json',
     'Content-Type': 'application/json',
+    'access-token': localStorage.getItem('access-token'),
+    client: localStorage.getItem('client'),
+    'Access-Control-Allow-Origin': '*',
   };
   const token = JSON.parse(localStorage.getItem('authToken'));
   const email = JSON.parse(localStorage.getItem('authEmail'));
