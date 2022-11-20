@@ -4,10 +4,10 @@ import { useUserState } from '../../contexts/user';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
+import { API_REQUESTS } from '../../constant';
 
 
 
-const baseUrl = `http://localhost:3001/api/v1/requests`
 
 export default function MyRequests(){
 
@@ -23,7 +23,7 @@ export default function MyRequests(){
     const getRequests = async (e) => {
       try {
         const response = await axios
-          .get(`${baseUrl}`)
+          .get(`${API_REQUESTS}`)
   
         const data = response.data
   

@@ -3,14 +3,13 @@ import { Route, Switch } from "react-router-dom";
 import { Box } from '@chakra-ui/react'
 import Navbar from "../Common/Navbar";
 import MainSection from "./MainSection";
-import Profile from "./Account/Profile";
 import AccountEdit from "./Account/AccountEdit";
-import Requests from './Requests';
-import Users from "./Users";
 import MyRequests from "./MyRequests";
 import RequestDetail from "./Requestdetail";
 import Footer from "../Common/Footer.tsx";
-import DocumentUpload from './DocumentUpload';
+import Profile from "./Account/Profile";
+
+import Location from "./Location";
 
 const Home = ({cable}) => {
 
@@ -21,14 +20,12 @@ const Home = ({cable}) => {
       <Box>
         <Switch>
           <Route exact path="/home" component={MainSection} />
-          <Route exact path="/upload" component={DocumentUpload} />
           <Route exact path="/" component={MainSection} />
           <Route exact path="/account/edit" component={AccountEdit} />
-          <Route exact path="/profile" component={Profile} />
-          <Route path="/requests" exact component={Requests} />
-          <Route exact path="/users" component={Users} />
+          <Route path="/requests" exact component={Location} />
           <Route path="/my-requests" exact component={MyRequests} />
           <Route path="/requests/:id" component={RequestDetail} />
+          <Route path="/profile" component={Profile} />
         </Switch>
       </Box>
       <Footer />

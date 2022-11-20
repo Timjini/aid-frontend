@@ -14,12 +14,11 @@ import {
   useDisclosure,
   Tooltip,
   Textarea
-  
 } from '@chakra-ui/react';
-import { setAuthHeaders } from '../../apis/axios';
 import axios from 'axios';
-import RequestList from './RequestList.tsx';
-import {API_REQUESTS} from '../../constant/index'
+import {API_REQUESTS} from '../../constant/index';
+import { setAuthHeaders } from '../../apis/axios';
+
 
 
 
@@ -30,6 +29,8 @@ function CreateRequest(){
     const [address, setAddress] = useState ('');
     const [situation, setSituation] = useState('pending');
     const [kind, setKind] = useState('onetime');
+
+    //Drwaer
     const { isOpen, onOpen, onClose } = useDisclosure()
     const firstField = React.useRef()
 
@@ -37,17 +38,31 @@ function CreateRequest(){
     useEffect(() => {
         fetchRequests();
       }, []);
-    const fetchRequests = () => {
-        axios
-          .get(`${API_REQUESTS}`)
-          .then((res) => {
-            console.log(res);
-            setRequests(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+
+      // Fetch all requests with setauthheaders
+      const fetchRequests = async () => {
+        try {
+          const response = await axios.get(API_REQUESTS);
+          setAuthHeaders();
+          setRequests(response.data);
+        } catch (error) {
+          console.log(error);
+          error();
+        }
       };
+
+
+    // const fetchRequests = () => {
+    //     axios
+    //       .get(`${API_REQUESTS}`)
+    //         .then((res) => {
+    //         console.log(res);
+    //         setRequests(res.data);
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   };
 
     const handleSubmit = async (e) => {
         //e.preventDefault();
@@ -61,6 +76,7 @@ function CreateRequest(){
             setAddress('');
             setKind('');
             setSituation('');
+            window.location.reload();
         } catch (err) {
             console.log(`Error: ${err.message}`);
         }
@@ -119,10 +135,7 @@ function CreateRequest(){
                 </form>
           </DrawerBody>
         </DrawerContent>
-      </Drawer>
-
-        <RequestList />
-        
+      </Drawer>        
         </>
     )
 

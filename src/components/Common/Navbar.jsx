@@ -23,7 +23,7 @@ import { resetAuthTokens } from '../../apis/axios';
 import { useUserState } from '../../contexts/user';
 import { Link } from 'react-router-dom';
 
-const Links = ['Home', 'Profile', 'Requests'];
+const Links = ['home', 'profile', 'requests'];
 
 const NavLink = props => (
   <ChakraLink
