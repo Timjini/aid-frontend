@@ -2,18 +2,11 @@
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
 };
-// export const API_REQUESTS = 'http://localhost:3001/api/v1/requests'; 
-// export const API_PROFILE = 'http://localhost:3001/api/v1/profiles';
-// export const API_FULFILLMENTS = 'http://localhost:3001/api/v1/fulfillments'; 
-// export const API_DOCUMENTS = 'http://localhost:3001/api/v1/documents'; 
-// export const API_USERS = 'http://localhost:3001/api/v1/users'; 
-// export const API_TWEETS = 'http://localhost:3001/api/v1/rooms/1/tweets';  
-// export const API_ROOT = 'http://localhost:3001/api/v1'; 
-// export const API_WS_ROOT = 'ws://localhost:3001/cable'; 
+// const baseUrl = 'http://localhost:3001/'
+const baseUrl = 'https://fierce-badlands-13020.herokuapp.com/';
 
-export const API_REQUESTS = 'https://fierce-badlands-13020.herokuapp.com/api/v1/requests'; 
-export const API_FULFILLMENTS = 'https://fierce-badlands-13020.herokuapp.com/api/v1/fulfillments'; 
-export const API_DOCUMENTS = 'https://fierce-badlands-13020.herokuapp.com/api/v1/documents'; 
-export const API_USERS = 'https://fierce-badlands-13020.herokuapp.com/api/v1/users'; 
-export const API_ROOT = 'https://fierce-badlands-13020.herokuapp.com/api/v1'; 
-export const API_WS_ROOT = 'https://fierce-badlands-13020.herokuapp.com/cable'; 
+export const API_ROOT = `${baseUrl}api/v1`; 
+export const API_WS_ROOT = `${baseUrl}cable`; 
+export const API_MESSAGES = `${baseUrl}api/v1/messages`;
+export const API_REQUESTS = `${baseUrl}api/v1/requests`; 
+export const API_FULFILLMENTS = `${baseUrl}api/v1/fulfillments`; 

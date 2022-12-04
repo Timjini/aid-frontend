@@ -24,7 +24,7 @@ import { setAuthHeaders } from '../../apis/axios';
 
 
 function CreateRequest(){
-    const [requests, setRequests] = useState([]);
+    const [requests, setRequests] = useState('');
     const [description, setDescription] = useState ('');
     const [address, setAddress] = useState ('');
     const [situation, setSituation] = useState('pending');
@@ -39,7 +39,6 @@ function CreateRequest(){
         fetchRequests();
       }, []);
 
-      // Fetch all requests with setauthheaders
       const fetchRequests = async () => {
         try {
           const response = await axios.get(API_REQUESTS);
@@ -50,19 +49,6 @@ function CreateRequest(){
           error();
         }
       };
-
-
-    // const fetchRequests = () => {
-    //     axios
-    //       .get(`${API_REQUESTS}`)
-    //         .then((res) => {
-    //         console.log(res);
-    //         setRequests(res.data);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   };
 
     const handleSubmit = async (e) => {
         //e.preventDefault();
@@ -79,6 +65,7 @@ function CreateRequest(){
             window.location.reload();
         } catch (err) {
             console.log(`Error: ${err.message}`);
+            alert('Error: Try later or report to : support@aid-app.com', err.message);
         }
     }
     

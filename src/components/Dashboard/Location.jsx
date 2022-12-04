@@ -1,37 +1,29 @@
-import React, {useEffect, useState, useRef, useCallback} from 'react'
-//import { GoogleMap, useJsApiLoader, Marker} from '@react-google-maps/api';
-import {MapContainer, TileLayer ,Marker,Popup, useMapEvents} from 'react-leaflet';
+import React, {useEffect, useState, useRef} from 'react';
+import {MapContainer, TileLayer ,Marker,Popup, useMapEvents,useMap} from 'react-leaflet';
 import '../styles/Home.css';
 import axios from 'axios';
-import L, { map } from 'leaflet';
-import {API_REQUESTS} from '../../constant/index'
+import L from 'leaflet';
+import {API_FULFILLMENTS, API_REQUESTS} from '../../constant/index'
 import 'leaflet/dist/leaflet.css';
-import {useGeolocated} from 'react-geolocated';
 import {
-  Avatar,
-  Box,
   chakra,
   Flex,
-  Icon,
   SimpleGrid,
-  useColorModeValue,
 } from '@chakra-ui/react';
-import {Link} from 'react-router-dom';
 import CreateRequest from './CreateRequest';
-
+import { Link, useHistory } from 'react-router-dom';
+import "leaflet/dist/leaflet.css";
+import LocateUser from './LocateUser';
 
 function Location() {
 const [request, setRequest] = useState([]);
 const mapRef = useRef();
-const [view, setView] = useState([51.505, -0.09]);
 const [currentBoundaries, setCurrentBoundaries] = useState(null);
-const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-useGeolocated({
-    positionOptions: {
-        enableHighAccuracy: false,
-    },
-    userDecisionTimeout: 5000,
-});
+const [fulfillement, setFulfillement] = useState([]);
+const ref = useRef();
+const history = useHistory();
+const [loading, setLoading] = useState(false);
+
 
 
 
@@ -48,31 +40,30 @@ useGeolocated({
   });
  const InnerComponent = ({setBoundaries}) => { 
     useMapEvents({
-          moveend() {
-          console.log(mapRef.current.getBounds());
-            const map = mapRef.current;
-            if (map != null) {
-               const { _southWest, _northEast } = map.getBounds();
-               setBoundaries({
-                _southWest: [_southWest.lat, _southWest.lng],
-                _northEast: [_northEast.lat, _northEast.lng],
-                });
-            }
+        moveend() {
+          const map = mapRef.current;
+          if (map != null) {
+            const { _southWest, _northEast } = map.getBounds();
+            setBoundaries({
+              _southWest: [_southWest.lat, _southWest.lng],
+              _northEast: [_northEast.lat, _northEast.lng],
+            });
+          }
         },
-        click() {
-          console.log(mapRef.current.getBounds());
-            const map = mapRef.current;
-            if (map != null) {
-               const { _southWest, _northEast } = map.getBounds();
-               setBoundaries({
-                _southWest: [_southWest.lat, _southWest.lng],
-                _northEast: [_northEast.lat, _northEast.lng],
-                });
-            }
-        },
+        dragend() {
+          const map = mapRef.current;
+          if (map != null) {
+            const { _southWest, _northEast } = map.getBounds();
+            setBoundaries({
+              _southWest: [_southWest.lat, _southWest.lng],
+              _northEast: [_northEast.lat, _northEast.lng],
+            });
+          }
+        }
     });
     return null;
  };
+
 
  const fetchRequests = async () => {
   const res = await axios.get(API_REQUESTS);
@@ -82,16 +73,29 @@ useGeolocated({
 
 useEffect(() => {
   fetchRequests();
+  setLoading(true);
 }, []);
 
-  
-  return !isGeolocationAvailable ? (
-    <div>Your browser does not support Geolocation</div>
-) : !isGeolocationEnabled ? (
-    <div>Geolocation is not enabled</div>
-) : coords ? (
+
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  let request_id = ref.current.value;
+  axios.post((API_FULFILLMENTS), {request_id})
+  .then((res) => {
+    console.log(res)
+    setFulfillement(res.data);
+  }
+  ).then (history.push(`/requests/${request_id}`))
+};
+
+
+  return (
     <>
-       <MapContainer  ref={mapRef} className='map' center={[coords.latitude,coords.longitude]} zoom={14} scrollWheelZoom={false}>
+      {(
+       <MapContainer  ref={mapRef} className='map' center={[41.0082,28.9784]} zoom={16} scrollWheelZoom={false} zoomAnimation={false}>
+           <LocateUser />
             <InnerComponent setBoundaries={setCurrentBoundaries} />
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -119,7 +123,9 @@ useEffect(() => {
               
             )}
           </MapContainer>
+      )}
           <CreateRequest />
+          <div className='container'>
           <SimpleGrid
         columns={{ base: 1, xl: 2 }}
         spacing={'20'}
@@ -132,6 +138,7 @@ useEffect(() => {
             request.longitude <= mapRef.current.getBounds()._northEast.lng)
             return (
                 <Flex
+                key={request.id}
                 boxShadow={'lg'}
                 maxW={'640px'}
                 direction={{ base: 'column-reverse', md: 'row' }}
@@ -180,38 +187,40 @@ useEffect(() => {
                     Address :{request.address}
                   </chakra.p>
                   <chakra.p fontFamily={'Work Sans'} fontWeight={'bold'} fontSize={14}>
-                    {request.user.username}
+                    Requested by: {request.user.username}
                     <chakra.span
                       fontFamily={'Inter'}
                       fontWeight={'medium'}
                       color='white'>
                       {' '}
-                      - {request.address}
                     </chakra.span><br />
-                    <Link to={`/requests/${request.id}`}
-                      className="btn btn-primary mt-2"
-                    >
-                      Help
-                    </Link>
                   </chakra.p>
+                  <form onSubmit={handleSubmit}>
+                      <input ref={ref} defaultValue={request.id} hidden={true} />
+                      <button
+                      type='submit'
+                      className="btn btn-primary mt-2"
+                      >
+                      Help
+                    </button>
+                    </form>
+                    <Link to={`/requests/${request.id}`}>
+                      View Request
+                    </Link>
                 </Flex>
-                <Avatar
-                  src={'https://images.unsplash.com/photo-1640952131659-49a06dd90ad2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'}
-                  height={'80px'}
-                  width={'80px'}
-                  alignSelf={'center'}
-                  m={{ base: '0 0 35px 0', md: '0 0 0 50px' }} />
+
               </Flex>
             )
             
-            else return null
+            else return loading
+
           })}
           </SimpleGrid>
+          </div>
 
 
       </>
-  ): (
-    <div>Getting the location data&hellip; </div>
-);
-};
+  )
+}
+
 export default Location;
