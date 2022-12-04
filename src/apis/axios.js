@@ -9,7 +9,7 @@ export const setAuthHeaders = (setLoading = () => null) => {
     'Content-Type': 'application/json',
     'access-token': localStorage.getItem('access-token'),
     client: localStorage.getItem('client'),
-    'Access-Control-Allow-Origin': 'https://aid-app.netlify.app/',
+    'Access-Control-Allow-Origin': '*',
   };
   const token = JSON.parse(localStorage.getItem('authToken'));
   const email = JSON.parse(localStorage.getItem('authEmail'));

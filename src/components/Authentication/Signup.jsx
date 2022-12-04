@@ -44,7 +44,6 @@ const Signup = ({ history }) => {
     password: '',
     username: '',
     passwordConfirmation: '',
-    avatar: '',
   });
 
   // const [email, setEmail] = useState('');
@@ -56,10 +55,9 @@ const Signup = ({ history }) => {
   const toast = useToast();
   const authDispatch = useAuthDispatch();
   const userDispatch = useUserDispatch();
-  const [avatar, setAvatar] = useState('');
 
   const handleSubmitExternally = async   values => {
-    const { email, firstName, lastName,username, password, passwordConfirmation, avatar } = values;
+    const { email, firstName, lastName,username, password, passwordConfirmation } = values;
     try {
       setLoading(true);
       const {
@@ -72,7 +70,6 @@ const Signup = ({ history }) => {
           password: password,
           username: username,
           password_confirmation: passwordConfirmation,
-          avatar: avatar
         },
       });
       authDispatch({
@@ -309,8 +306,6 @@ const Signup = ({ history }) => {
                         )}
                       </Field>
                     </Box>
-                    <input type="file" name="avatar"  />
-                    <img src={values.avatar}  />
                     <Stack spacing={10}>
                       <Button
                       isLoading={loading}
