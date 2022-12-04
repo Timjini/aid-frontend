@@ -1,6 +1,6 @@
  export const HEADERS = {
   'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': 'https://fierce-badlands-13020.herokuapp.com/',
+  'Access-Control-Allow-Origin': 'https://https://aid-app.netlify.app/',
 };
 // const baseUrl = 'http://localhost:3001/'
 const baseUrl = 'https://fierce-badlands-13020.herokuapp.com/';
