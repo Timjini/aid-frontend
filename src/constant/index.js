@@ -1,6 +1,6 @@
  export const HEADERS = {
   'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://fierce-badlands-13020.herokuapp.com/',
 };
 // const baseUrl = 'http://localhost:3001/'
 const baseUrl = 'https://fierce-badlands-13020.herokuapp.com/';
