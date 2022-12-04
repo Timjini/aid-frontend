@@ -1,9 +1,9 @@
  export const HEADERS = {
   'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': 'http://localhost:3000',
+  'Access-Control-Allow-Origin': '*',
 };
-const baseUrl = 'http://localhost:3001/'
-// const baseUrl = 'https://fierce-badlands-13020.herokuapp.com/';
+// const baseUrl = 'http://localhost:3001/'
+const baseUrl = 'https://fierce-badlands-13020.herokuapp.com/';
 
 export const API_ROOT = `${baseUrl}api/v1`; 
 export const API_WS_ROOT = `${baseUrl}cable`; 

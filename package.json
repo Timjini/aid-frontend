@@ -2,7 +2,7 @@
   "name": "aid-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
+  "proxy": "https://fierce-badlands-13020.herokuapp.com/",
   "dependencies": {
     "@chakra-ui/checkbox": "^1.0.0",
     "@chakra-ui/icons": "^1.0.0",
