@@ -5,7 +5,8 @@ import { API_REQUESTS } from '../../constant';
 import { API_FULFILLMENTS } from '../../constant';
 import { Avatar, Flex, Text, Tooltip, Button, Input, Container, 
    Drawer,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,
-   useDisclosure, Divider,TableContainer,Table, Thead,Tr,Tbody,Th,Td  } from "@chakra-ui/react";
+   useDisclosure, Divider,TableContainer,Table, Thead,Tr,Tbody,Th,Td,
+   Accordion,AccordionItem,AccordionButton,AccordionIcon,AccordionPanel,Box } from "@chakra-ui/react";
 import { Link, useHistory } from 'react-router-dom';
 
 
@@ -102,24 +103,27 @@ axios
 
       <Container className='p-5' >
         {request.fulfillments?.map((fulfillment) => (
-          <TableContainer key={fulfillment.id}>
-          <Table size='sm'>
-            <Thead>
-              <Tr>
-                <Th>Fulfiller:</Th>
-                <Th>Fulfiller email:</Th>
-                <Th isNumeric></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr key={fulfillment.id}>
-                <Td>{fulfillment.user?.username}</Td>
-                <Td>{fulfillment.user?.email}</Td>
-                <Td isNumeric><Link to={`/fulfillments/${fulfillment.id}`}>Chat</Link></Td>
-              </Tr>
-              </Tbody>
-          </Table>
-        </TableContainer>
+
+            <Accordion allowToggle>
+            <AccordionItem key={fulfillment.id}>
+              <h2>
+                <AccordionButton>
+                  <Box flex='1' textAlign='left'>
+                    {fulfillment.user?.username}
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                {fulfillment.user?.email} <br/>
+                <Link to={`/fulfillments/${fulfillment.id}`}>
+                  <Button colorScheme='blue' className='mt-2'>
+                    Send a Message
+                  </Button>
+                </Link>
+              </AccordionPanel>
+            </AccordionItem>
+            </Accordion>
           ))}
       </Container>
   

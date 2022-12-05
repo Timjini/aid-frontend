@@ -1,6 +1,5 @@
 import React,{useEffect, useState} from 'react';
 import {
-  Select,
   FormControl,
   FormLabel,
   Input,
@@ -13,12 +12,15 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Tooltip,
-  Textarea
+  Textarea,
+  RadioGroup,
+  Stack,
+  Radio,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import {API_REQUESTS} from '../../constant/index';
 import { setAuthHeaders } from '../../apis/axios';
-
+import Select from 'react-select';
 
 
 
@@ -28,7 +30,10 @@ function CreateRequest(){
     const [description, setDescription] = useState ('');
     const [address, setAddress] = useState ('');
     const [situation, setSituation] = useState('pending');
+    // select kind of request onetime or financial 
     const [kind, setKind] = useState('onetime');
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [options, setOptions] = useState([]);
 
     //Drwaer
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -38,6 +43,9 @@ function CreateRequest(){
     useEffect(() => {
         fetchRequests();
       }, []);
+
+
+      
 
       const fetchRequests = async () => {
         try {
@@ -49,29 +57,25 @@ function CreateRequest(){
           error();
         }
       };
-
+    // post request with roken and headers 
     const handleSubmit = async (e) => {
-        //e.preventDefault();
-        const newRequest = {description, address, kind,situation}
-        try{
-            const response = await axios.post(`${API_REQUESTS}`, newRequest);
-            setAuthHeaders();
-            const allRequests = [...requests, response.data];
-            setRequests(allRequests);
-            setDescription('');
-            setAddress('');
-            setKind('');
-            setSituation('');
-            window.location.reload();
-        } catch (err) {
-            console.log(`Error: ${err.message}`);
-            alert('Error: Try later or report to : support@aid-app.com', err.message);
+        e.preventDefault();
+        try {
+          const response = await axios.post(API_REQUESTS, {
+            description,
+            address,
+            situation,
+            kind,
+          });
+          setAuthHeaders();
+          setRequests(response.data);
+          onClose();
+          window.location.reload();
+        } catch (error) {
+          console.log(error);
+          error();
         }
-    }
-    
-      const changeKind = (kind) =>{
-    setKind(kind)
-  }
+      };
 
     return (
         <>
@@ -107,10 +111,12 @@ function CreateRequest(){
         </FormControl>
                     <FormControl>
                     <FormLabel>Request Type</FormLabel>
-                        <Select placeholder='Type of Request' value={kind} onChange={(e) => changeKind(e.target.value)}>
-                            <option value = "onetime">One Time</option>
-                            <option value= "financial">Financial Request</option>
-                        </Select>
+                    <RadioGroup onChange={setKind} value={kind}>
+                      <Stack direction='row'>
+                        <Radio value='onetime'>One Time Help </Radio>
+                        <Radio value='financial'>Financial Help</Radio>
+                      </Stack>
+                    </RadioGroup>
                     </FormControl>
                 <Button
                    mt={4}

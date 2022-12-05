@@ -90,7 +90,6 @@ const handleSubmit = async (e) => {
   ).then (history.push(`/requests/${request_id}`))
 };
 
-
   return (
     <>
       {(
@@ -126,6 +125,7 @@ const handleSubmit = async (e) => {
       )}
           <CreateRequest />
           <div className='container'>
+
           <SimpleGrid
         columns={{ base: 1, xl: 2 }}
         spacing={'20'}
@@ -137,7 +137,7 @@ const handleSubmit = async (e) => {
             request.longitude >= mapRef.current.getBounds()._southWest.lng &&
             request.longitude <= mapRef.current.getBounds()._northEast.lng)
             return (
-                <Flex
+              <Flex
                 key={request.id}
                 boxShadow={'lg'}
                 maxW={'640px'}
@@ -178,6 +178,7 @@ const handleSubmit = async (e) => {
                   direction={'column'}
                   textAlign={'left'}
                   justifyContent={'space-between'}>
+                    
                   <chakra.p
                     fontFamily={'Inter'}
                     fontWeight={'medium'}
@@ -196,17 +197,17 @@ const handleSubmit = async (e) => {
                     </chakra.span><br />
                   </chakra.p>
                   <form onSubmit={handleSubmit}>
-                      <input ref={ref} defaultValue={request.id} hidden={true} />
-                      <button
+                    <input ref={ref} defaultValue={request.id} hidden={true} />
+                    <button
                       type='submit'
                       className="btn btn-primary mt-2"
-                      >
+                    >
                       Help
                     </button>
-                    </form>
-                    <Link to={`/requests/${request.id}`}>
-                      View Request
-                    </Link>
+                  </form>
+                  <Link to={`/requests/${request.id}`}>
+                    View Request
+                  </Link>
                 </Flex>
 
               </Flex>
