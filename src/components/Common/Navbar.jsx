@@ -98,6 +98,12 @@ const Navbar = () => {
                 <MenuItem as={Link} to="/account/edit">
                   Change password
                 </MenuItem>
+                <MenuItem as={Link} to="/my-fulfillments">
+                  My Fulfillments
+                </MenuItem>
+                <MenuItem as={Link} to="/my-requests">
+                  My Requests
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </MenuList>
             </Menu>

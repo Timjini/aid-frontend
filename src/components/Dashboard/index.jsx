@@ -10,6 +10,7 @@ import Footer from "../Common/Footer.tsx";
 import Profile from "./Account/Profile";
 import Chat from "./Chat";
 import Location from "./Location";
+import MyFulfillments from "./MyFulfillments";
 
 const Home = ({cable}) => {
   function createSocket() {
@@ -51,6 +52,7 @@ const Home = ({cable}) => {
           <Route exact path="/account/edit" component={AccountEdit} />
           <Route path="/requests" exact component={Location} />
           <Route path="/my-requests" exact component={MyRequests} />
+          <Route path="/my-fulfillments" component={MyFulfillments} />
           <Route path="/requests/:id" component={RequestDetail} />
           <Route path={`/fulfillments/:id`} component={Chat} />
           <Route path="/profile" component={Profile} />

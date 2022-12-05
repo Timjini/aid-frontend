@@ -9,6 +9,16 @@ import {
   chakra,
   Flex,
   SimpleGrid,
+  useDisclosure,
+  Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  Box
 } from '@chakra-ui/react';
 import CreateRequest from './CreateRequest';
 import { Link, useHistory } from 'react-router-dom';
@@ -23,6 +33,8 @@ const [fulfillement, setFulfillement] = useState([]);
 const ref = useRef();
 const history = useHistory();
 const [loading, setLoading] = useState(false);
+const cancelRef = React.useRef()
+const { isOpen, onOpen, onClose } = useDisclosure()
 
 
 
@@ -84,16 +96,21 @@ const handleSubmit = async (e) => {
   let request_id = ref.current.value;
   axios.post((API_FULFILLMENTS), {request_id})
   .then((res) => {
-    console.log(res)
     setFulfillement(res.data);
   }
   ).then (history.push(`/requests/${request_id}`))
+  .catch((err) => console.log(err));
+  onClose();
+  setLoading(true);
+  alert("You have already fulfilled this request");
 };
+
+const data = request.length
 
   return (
     <>
       {(
-       <MapContainer  ref={mapRef} className='map' center={[41.0082,28.9784]} zoom={16} scrollWheelZoom={false} zoomAnimation={false}>
+       <MapContainer  ref={mapRef} className='map' center={[41.0082,28.9784]} zoom={14} scrollWheelZoom={false} zoomAnimation={false}>
            <LocateUser />
             <InnerComponent setBoundaries={setCurrentBoundaries} />
             <TileLayer
@@ -124,7 +141,48 @@ const handleSubmit = async (e) => {
           </MapContainer>
       )}
           <CreateRequest />
-          <div className='container'>
+          <div className='container RequestCards'>
+
+          <Flex
+      textAlign={'center'}
+      pt={10}
+      justifyContent={'center'}
+      direction={'column'}
+      width={'full'}>
+      <Box width={{ base: 'full', sm: 'lg', lg: 'xl' }} margin={'auto'}>
+        <chakra.h3
+          fontWeight={'bold'}
+          fontSize={20}
+          textTransform={'uppercase'}
+          color={'purple.400'}>
+          People Will Help You
+        </chakra.h3>
+        <chakra.h1
+          py={5}
+          fontSize={48}
+          fontWeight={'bold'}
+          >
+          You are in the right place
+        </chakra.h1>
+        <chakra.h2
+          margin={'auto'}
+          width={'70%'}
+          fontWeight={'medium'}
+          >
+          Unfillfilled Requests{' '}
+          <chakra.strong >
+            {data}
+          </chakra.strong>{' '}
+          drag the map and find the nearest requests
+        </chakra.h2>
+      </Box>
+      <SimpleGrid
+        columns={{ base: 1, xl: 2 }}
+        spacing={'20'}
+        mt={16}
+        mx={'auto'}>
+      </SimpleGrid>
+    </Flex>
 
           <SimpleGrid
         columns={{ base: 1, xl: 2 }}
@@ -180,17 +238,15 @@ const handleSubmit = async (e) => {
                   justifyContent={'space-between'}>
                     
                   <chakra.p
-                    fontFamily={'Inter'}
                     fontWeight={'medium'}
                     fontSize={'15px'}
                     pb={4}>
                     {request.description}<br />
                     Address :{request.address}
                   </chakra.p>
-                  <chakra.p fontFamily={'Work Sans'} fontWeight={'bold'} fontSize={14}>
+                  <chakra.p  fontWeight={'bold'} fontSize={14}>
                     Requested by: {request.user.username}
                     <chakra.span
-                      fontFamily={'Inter'}
                       fontWeight={'medium'}
                       color='white'>
                       {' '}
@@ -198,13 +254,33 @@ const handleSubmit = async (e) => {
                   </chakra.p>
                   <form onSubmit={handleSubmit}>
                     <input ref={ref} defaultValue={request.id} hidden={true} />
-                    <button
-                      type='submit'
-                      className="btn btn-primary mt-2"
+                    <Button onClick={onOpen} colorScheme='teal'>Help Now</Button>
+                    <AlertDialog
+                      motionPreset='slideInBottom'
+                      leastDestructiveRef={cancelRef}
+                      onClose={onClose}
+                      isOpen={isOpen}
+                      isCentered
                     >
-                      Help
-                    </button>
-                  </form>
+                      <AlertDialogOverlay />
+
+                      <AlertDialogContent>
+                        <AlertDialogHeader>Help Now</AlertDialogHeader>
+                        <AlertDialogCloseButton />
+                        <AlertDialogBody>
+                          Would you like to fulfill this request?
+                        </AlertDialogBody>
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            No
+                          </Button>
+                          <Button type='submit' colorScheme='teal' ml={3} onClick={handleSubmit}>
+                            Yes
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </form> 
                   <Link to={`/requests/${request.id}`}>
                     View Request
                   </Link>
@@ -212,8 +288,6 @@ const handleSubmit = async (e) => {
 
               </Flex>
             )
-            
-            else return loading
 
           })}
           </SimpleGrid>

@@ -6,7 +6,7 @@ import { API_FULFILLMENTS } from '../../constant';
 import { Avatar, Flex, Text, Tooltip, Button, Input, Container, 
    Drawer,DrawerOverlay,DrawerContent,DrawerHeader,DrawerBody,
    useDisclosure, Divider,TableContainer,Table, Thead,Tr,Tbody,Th,Td,
-   Accordion,AccordionItem,AccordionButton,AccordionIcon,AccordionPanel,Box } from "@chakra-ui/react";
+   Accordion,AccordionItem,AccordionButton,AccordionIcon,AccordionPanel,Box,Badge } from "@chakra-ui/react";
 import { Link, useHistory } from 'react-router-dom';
 
 
@@ -102,28 +102,22 @@ axios
       </Drawer>
 
       <Container className='p-5' >
+      <h2>List of Fulfillers</h2>
         {request.fulfillments?.map((fulfillment) => (
-
-            <Accordion allowToggle>
-            <AccordionItem key={fulfillment.id}>
-              <h2>
-                <AccordionButton>
-                  <Box flex='1' textAlign='left'>
-                    {fulfillment.user?.username}
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                {fulfillment.user?.email} <br/>
-                <Link to={`/fulfillments/${fulfillment.id}`}>
-                  <Button colorScheme='blue' className='mt-2'>
-                    Send a Message
-                  </Button>
+            <Flex key={fulfillment.id} colorScheme="teal" className='p-2'>
+              <Avatar name={fulfillment.user?.username} src={fulfillment.user?.avatar} />
+              <Box ml='3'>
+                <Text fontWeight='bold' >
+                {fulfillment.user?.username}
+                  <Badge ml='1' colorScheme='green'>
+                  {fulfillment.user?.email}
+                  </Badge>
+                </Text>
+              </Box>
+              <Link to={`/fulfillments/${fulfillment.id}`} className="m-2 p-2">
+              <Text fontSize='sm'>Contact</Text>
                 </Link>
-              </AccordionPanel>
-            </AccordionItem>
-            </Accordion>
+            </Flex>
           ))}
       </Container>
   

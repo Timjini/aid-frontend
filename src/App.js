@@ -5,7 +5,6 @@ import Main from './components/Main';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './contexts/auth';
 import { UserProvider } from './contexts/user';
-import { Spinner } from '@chakra-ui/react'
 
 function App(props) {
   const [loaded, setLoaded] = useState(false);
@@ -20,15 +19,11 @@ function App(props) {
   return (
     <AuthProvider>
       <UserProvider>
-        { !loaded? ( <BounceLoader color="#36d7b7" />
-) : (
            <ChakraProvider theme={theme}>
            <Box textAlign="center" fontSize="xl">
              <Main {...props} />
            </Box>
          </ChakraProvider>
-          
-        )}
       </UserProvider>
     </AuthProvider>
   );

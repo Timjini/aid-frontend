@@ -18,7 +18,12 @@ import {
 import { Link } from 'react-router-dom';
 
 export default function CallToActionWithVideo() {
+
+
+
   return (
+
+
     <Container maxW={'7xl'}>
       <Stack
         align={'center'}

@@ -1,9 +1,7 @@
-import React,{ useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {API_FULFILLMENTS} from '../../constant';
 import axios from 'axios';
 import { useUserState } from '../../contexts/user';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import { API_REQUESTS } from '../../constant';
 import { Link } from 'react-router-dom';
 import {
   chakra,
@@ -16,35 +14,32 @@ import {
 import '../styles/Home.css';
 
 
+function MyFulfillments() {
+    const [fulfillments, setFullfilments] = useState([]);
+    const {user} = useUserState ();
 
-
-export default function MyRequests(){
-
-    const {user} = useUserState ();  
-    const [requests, setRequests] = useState ([])
-
-    useEffect ((e) => {
-        getRequests();
-    }, [])
-
-    const getRequests = async (e) => {
-      try {
-        const response = await axios
-          .get(`${API_REQUESTS}`)
-  
-        const data = response.data
-  
-        setRequests(data.reverse())
-        console.log(response)
-  
-      } catch(error) {
-        console.log(error)
+    const getFulfillments = async (e) => {
+        try {
+          const response = await axios
+            .get(`${API_FULFILLMENTS}`)
+    
+          const data = response.data
+    
+          setFullfilments(data)
+          console.log(response)
+    
+        } catch(error) {
+          alert ( " Please Try later ")
+        }
       }
-    }
 
-    const data = requests.length
+      useEffect ((e) => {
+        getFulfillments();
+    }, [])
+  
+const data = fulfillments.length
 
-    return (
+  return (
       <div className='container RequestCards'>
         <Flex
       textAlign={'center'}
@@ -58,14 +53,14 @@ export default function MyRequests(){
           fontSize={48}
           fontWeight={'bold'}
           >
-          My Requests
+          My Fulfillments
         </chakra.h1>
         <chakra.h2
           margin={'auto'}
           width={'70%'}
           fontWeight={'medium'}
           >
-          Total Number of Requests :{' '}
+          Total Number of Fulfillments :{' '}
           <chakra.strong >
             {data}
           </chakra.strong>{' '}
@@ -83,11 +78,11 @@ export default function MyRequests(){
               spacing={'20'}
               mt={16}
               mx={'auto'}>
-                {requests?.map((request,index)  => {
-             if (user.username === request.user.username)
+                {fulfillments?.map((fulfillment,index)  => {
+             if (user.username === fulfillment.user.username)
              return(
                     <Flex
-                      key={request.id}
+                      key={fulfillment.id}
                       boxShadow={'lg'}
                       maxW={'640px'}
                       direction={{ base: 'column-reverse', md: 'row' }}
@@ -133,10 +128,10 @@ export default function MyRequests(){
                           fontSize={'18px'}
                           pb={4}>
                             <Badge variant='solid' colorScheme='green'>
-                              {request.situation}
+                              text
                             </Badge><br/>
-                          {request.description}<br />
-                          Address :{request.address}
+                          {fulfillment.id}
+                          {fulfillment.user.username}
                         </chakra.p>
                         <chakra.p  fontWeight={'bold'} fontSize={16}>
                           <chakra.span
@@ -145,14 +140,14 @@ export default function MyRequests(){
                             {' '}
                           </chakra.span><br />
                         </chakra.p>
-                        <Link to={`/requests/${request.id}`}>
+                        <Link to={`/fulfillments/${fulfillment.id}`}>
                           <Button
                             fontWeight={'medium'}
                             fontSize={'15px'}
                             px={6}
                             colorScheme='teal'
                             >
-                            View Request
+                            Send a Message
                           </Button>
                         </Link>
                       </Flex>
@@ -162,7 +157,7 @@ export default function MyRequests(){
         else {
           return (
             <div>
-                <h1>no request</h1>
+                <h1>no Fulfillments</h1>
             </div>
           )
         }
@@ -170,36 +165,7 @@ export default function MyRequests(){
     </SimpleGrid>
     </div>
   )
+
 }
 
-
-
-
-//   return (
-//     <><h1 className='display-5 p-2'>My Requests</h1>
-//       <div>
-//       <div className="container">
-//              <div className='row'>
-//                 <div className='p-5 mx-auto my-auto'>
-//                 </div>
-             
-//              )
-//              <div  className='help2 p-5'>
-//                     <Image src={Help2} className='img-fluid' />
-//               </div>
-//              else { 
-//                  return ( 
-//                       <div>
-//                           <h1>no request</h1>
-//                       </div>
-//                   ) 
-//                  }
-//                 })}
-
-//          </div>          
-//       </div>
-//     </>
-//   )
-// }
-
-
+export default MyFulfillments;

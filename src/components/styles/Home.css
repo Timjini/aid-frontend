@@ -89,27 +89,7 @@
     text-transform: uppercase;
   
   }
-  
-/*  .typed-text {
-    font-size: 2rem;
-  
-  }
-  .btn-main-offer {
-    border: 1px solid black;
-    text-decoration: none;
-    text-transform: uppercase;
-    border-radius: 2px;
-    color: #fff;
-    padding: 0.625rem 0.75rem 0.75rem 0.75rem;
-    background-color: #000;
-  }
-  .btn-main-offer:hover
-  {
-    color: black;
-    background-color: rgb(219, 219, 214);
-    font-weight: 700;
-  }
-  */
+
   .section-1 {
     background-color: #f5f5f5;
 }
@@ -732,4 +712,14 @@ button, input, optgroup, select, textarea {
       height: calc(100vh - 350px);
       overflow-x: auto
   }
+}
+
+
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+  height: 50vh!important;
+}
+
+.RequestCards{
+  min-height: fit-content;
+  margin-bottom: 20vh;
 }

@@ -41,14 +41,16 @@ import {
       </chakra.button>
     );
   };
-  
+
   export default function SmallWithSocial() {
     return (
 
       <Box
       style = {{marginTop: '150px'}}
     bg={useColorModeValue('gray.50', 'gray.900')}
-    color={useColorModeValue('gray.700', 'gray.200')}>
+    color={useColorModeValue('gray.700', 'gray.200')}
+    className="fixed-bottom"
+    >
     <Container
       as={Stack}
       maxW={'6xl'}

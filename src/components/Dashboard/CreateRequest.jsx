@@ -16,12 +16,12 @@ import {
   RadioGroup,
   Stack,
   Radio,
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import {API_REQUESTS} from '../../constant/index';
 import { setAuthHeaders } from '../../apis/axios';
-import Select from 'react-select';
-
+import '../styles/Home.css';
 
 
 
@@ -32,8 +32,7 @@ function CreateRequest(){
     const [situation, setSituation] = useState('pending');
     // select kind of request onetime or financial 
     const [kind, setKind] = useState('onetime');
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [options, setOptions] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     //Drwaer
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -57,7 +56,8 @@ function CreateRequest(){
           error();
         }
       };
-    // post request with roken and headers 
+      const toast = useToast();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -70,7 +70,14 @@ function CreateRequest(){
           setAuthHeaders();
           setRequests(response.data);
           onClose();
+          setLoading(true);
           window.location.reload();
+          toast({
+            description: 'Request Posted Successfully',
+            status: 'success',
+            duration: 1500,
+            isClosable: true,
+          });
         } catch (error) {
           console.log(error);
           error();
@@ -78,7 +85,7 @@ function CreateRequest(){
       };
 
     return (
-        <>
+      <>
       <div className="container p-2">
         <Tooltip hasArrow label='Click to Add' bg='gray.300' color='black'>
             <Button colorScheme='teal' onClick={onOpen}>
