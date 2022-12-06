@@ -12,7 +12,6 @@ import Hero from './Home/Hero';
 import { useAuthState, useAuthDispatch } from '../contexts/auth';
 import { useUserDispatch } from '../contexts/user';
 import { setAuthHeaders, registerIntercepts } from '../apis/axios';
-import PageLoader from './Common/PageLoader';
 
 const Main = props => {
   const [loading, setLoading] = useState(true);
@@ -30,9 +29,7 @@ const Main = props => {
     setAuthHeaders(setLoading);
   }, []);
 
-  if (loading) {
-    return <PageLoader />;
-  }
+
 
   return (
     <BrowserRouter>

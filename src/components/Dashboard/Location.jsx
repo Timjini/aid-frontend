@@ -25,6 +25,7 @@ import { Link, useHistory } from 'react-router-dom';
 import "leaflet/dist/leaflet.css";
 import LocateUser from './LocateUser';
 import { useUserState } from '../../contexts/user';
+import LoadingScreen from './LoadingScreen';
 
 
 function Location() {
@@ -34,10 +35,15 @@ const [currentBoundaries, setCurrentBoundaries] = useState(null);
 const [fulfillement, setFulfillement] = useState([]);
 const ref = useRef();
 const history = useHistory();
-const [loading, setLoading] = useState(false);
 const cancelRef = React.useRef()
 const { isOpen, onOpen, onClose } = useDisclosure()
+
 const {user} = useUserState();
+const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 6000)
+  }, [])
 
 
   const markerIcon = new L.icon ({
@@ -81,11 +87,11 @@ const {user} = useUserState();
  const fetchRequests = async () => {
   const res = await axios.get(API_REQUESTS);
   setRequest(res.data);
+  console.log(res.data)
 };
 
 useEffect(() => {
   fetchRequests();
-  setLoading(true);
   console.log(request);
 }, []);
 
@@ -102,14 +108,22 @@ const handleSubmit = async (e) => {
   ).then (history.push(`/requests/${request_id}`))
   .catch((err) => console.log(err));
   onClose();
-  setLoading(true);
 };
 
-const data = request.length
+let counter = 0;
+
+for (let i = 0; i < request.length; i++) {
+  if (request[i].latitude >= mapRef.current.getBounds()._southWest.lat &&
+  request[i].latitude <= mapRef.current.getBounds()._northEast.lat &&
+  request[i].longitude >= mapRef.current.getBounds()._southWest.lng &&
+  request[i].longitude <= mapRef.current.getBounds()._northEast.lng) counter++;
+}
+
+console.log(counter);
 
   return (
-    <>
-      {(
+    <>  
+    
        <MapContainer  ref={mapRef} className='map' center={[41.0082,28.9784]} zoom={14} scrollWheelZoom={false} zoomAnimation={false}>
            <LocateUser />
             <InnerComponent setBoundaries={setCurrentBoundaries} />
@@ -139,7 +153,8 @@ const data = request.length
               
             )}
           </MapContainer>
-      )}
+      
+
           <CreateRequest />
           <div className='container RequestCards'>
 
@@ -169,11 +184,11 @@ const data = request.length
           width={'70%'}
           fontWeight={'medium'}
           >
-          {data}{' '}
+          {counter}{' '}
           <chakra.strong >
-            unfulfilled requests
-          </chakra.strong>{' '}
-          drag the map and find the nearest requests
+            unfulfilled requests in your neighbourhood
+          </chakra.strong>{' '} <br/>
+          drag the map and find requests in other neighbourhoods and cities
         </chakra.h2>
       </Box>
       <SimpleGrid
@@ -193,7 +208,7 @@ const data = request.length
             if (request.latitude >= mapRef.current.getBounds()._southWest.lat &&
             request.latitude <= mapRef.current.getBounds()._northEast.lat &&
             request.longitude >= mapRef.current.getBounds()._southWest.lng &&
-            request.longitude <= mapRef.current.getBounds()._northEast.lng)
+            request.longitude <= mapRef.current.getBounds()._northEast.lng )
             return (
               <Flex
                 key={request.id}
@@ -257,7 +272,7 @@ const data = request.length
                   </chakra.p>
                   <form>
                     <input ref={ref} defaultValue={request.id} hidden={true} />
-                    <Button onClick={onOpen} colorScheme='teal' disabled={request.situation === 'Fulfilled'}>Fulfill</Button>
+                    <Button onClick={onOpen} colorScheme='teal' disabled={request.situation === 'Fulfilled' || request.sitation === 'archived'}>Fulfill</Button>
                     <AlertDialog
                       motionPreset='slideInBottom'
                       leastDestructiveRef={cancelRef}
@@ -288,12 +303,12 @@ const data = request.length
 
               </Flex>
             )
-            else return null
-
+            // else if (counter === 0 ) return (
+            //   <h1 key={request.id}>No requests</h1>
+            // )
           })}
           </SimpleGrid>
           </div>
-
 
       </>
   )

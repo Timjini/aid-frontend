@@ -22,6 +22,7 @@ export default function MyRequests(){
 
     const {user} = useUserState ();  
     const [requests, setRequests] = useState ([])
+    const [situation, setSituation] = useState ('pending')
 
     useEffect ((e) => {
         getRequests();
@@ -54,7 +55,29 @@ const deleteRequest = async (id) => {
   }
 }
 
-    const data = requests.length
+// update request sitation to pending
+
+const handleSubmit = async (id) => {
+  axios
+  .patch(`${API_REQUESTS}/${id}`, {
+    situation: "Pending"
+  })
+  .then((response) => {
+    setRequests(response.data);
+  });
+}
+
+useEffect (() => {
+  getRequests();
+}, [situation])
+
+
+let counter = 0;
+
+for (let i = 0; i < requests.length; i++) {
+  if ((requests[i].situation === "Pending" && user.username === requests[i].user?.username) || requests[i].sitation === "Fulfilled") counter++;
+}
+
 
     return (
       <div className='container RequestCards'>
@@ -79,7 +102,7 @@ const deleteRequest = async (id) => {
           >
           Total Number of Requests :{' '}
           <chakra.strong >
-            {data}
+            {counter}
           </chakra.strong>{' '}
         </chakra.h2>
       </Box>
@@ -145,7 +168,7 @@ const deleteRequest = async (id) => {
                           fontSize={'18px'}
                           pb={4}>
                             <Badge variant='solid' colorScheme='green'>
-                              {request.situation}
+                              {request.situation} // {request.length}
                             </Badge><br/>
                           {request.description}<br />
                           Address :{request.address}
@@ -166,6 +189,17 @@ const deleteRequest = async (id) => {
                             >
                             View Request
                           </Button>
+                          {/* update request situation to pending */}
+                          <Button 
+                            fontWeight={'medium'}
+                            fontSize={'15px'}
+                            px={6}
+                            colorScheme='teal'
+                            onClick={() => handleSubmit(request.id)}
+                            >
+                            Update Request
+                          </Button>
+
                         </Link>
                       </Flex>
                       <Button colorScheme='red' 
@@ -176,47 +210,10 @@ const deleteRequest = async (id) => {
       
                     </Flex>
                   )
-        else {
-          return (
-            <div>
-                <h1>no request</h1>
-            </div>
-          )
-        }
       })}
     </SimpleGrid>
     </div>
   )
 }
-
-
-
-
-//   return (
-//     <><h1 className='display-5 p-2'>My Requests</h1>
-//       <div>
-//       <div className="container">
-//              <div className='row'>
-//                 <div className='p-5 mx-auto my-auto'>
-//                 </div>
-             
-//              )
-//              <div  className='help2 p-5'>
-//                     <Image src={Help2} className='img-fluid' />
-//               </div>
-//              else { 
-//                  return ( 
-//                       <div>
-//                           <h1>no request</h1>
-//                       </div>
-//                   ) 
-//                  }
-//                 })}
-
-//          </div>          
-//       </div>
-//     </>
-//   )
-// }
 
 

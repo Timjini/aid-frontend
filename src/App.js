@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { ChakraProvider, Box, theme } from '@chakra-ui/react';
 //import { ColorModeSwitcher } from './ColorModeSwitcher';
 import Main from './components/Main';
@@ -7,14 +7,7 @@ import { AuthProvider } from './contexts/auth';
 import { UserProvider } from './contexts/user';
 
 function App(props) {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    let timer = setTimeout(() => setLoaded(true), 1000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+ 
 
   return (
     <AuthProvider>
