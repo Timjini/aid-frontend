@@ -26,7 +26,6 @@ function MyFulfillments() {
           const data = response.data
     
           setFullfilments(data)
-          console.log(response)
     
         } catch(error) {
           alert ( " Please Try later ")
@@ -38,6 +37,19 @@ function MyFulfillments() {
     }, [])
   
 const data = fulfillments.length
+
+// delete fulfillment
+const deleteFulfillment = async (id) => {
+  try {
+    const response = await axios
+      .delete(`${API_FULFILLMENTS}/${id}`)
+    const data = response.data
+    console.log(data)
+    getFulfillments();
+  } catch(error) {
+    alert ( " Please Try later ")
+  }
+}
 
   return (
       <div className='container RequestCards'>
@@ -150,6 +162,16 @@ const data = fulfillments.length
                             Send a Message
                           </Button>
                         </Link>
+                        <Button
+                            fontWeight={'medium'}
+                            fontSize={'15px'}
+                            px={8}
+                            colorScheme='red'
+                            margin={2}
+                            onClick = {() => deleteFulfillment(fulfillment.id)}
+                            >
+                            Delete
+                          </Button>
                       </Flex>
       
                     </Flex>

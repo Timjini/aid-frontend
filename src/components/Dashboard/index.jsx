@@ -13,33 +13,33 @@ import Location from "./Location";
 import MyFulfillments from "./MyFulfillments";
 
 const Home = ({cable}) => {
-  function createSocket() {
-    const socket_url = "ws://localhost:3001/cable";
-    const socket = new WebSocket(socket_url);
-    socket.onopen = () => {
-      console.log("Connected to socket");
-      const msg = {
-        command: "subscribe",
-        identifier: JSON.stringify({
-          channel: "MessagesChannel",
-        }),
-    };
-    socket.send(JSON.stringify(msg));
-    }
-    socket.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      if (data.type === "ping") {
-        return;
-      }
-      if (data.message) {
-        console.log(data.message);
-      }
-    }
-    socket.onerror = (err) => {
-      console.log(err);
-    };
-  }
-  createSocket();
+  // function createSocket() {
+  //   const socket_url = "ws://localhost:3001/cable";
+  //   const socket = new WebSocket(socket_url);
+  //   socket.onopen = () => {
+  //     console.log("Connected to socket");
+  //     const msg = {
+  //       command: "subscribe",
+  //       identifier: JSON.stringify({
+  //         channel: "MessagesChannel",
+  //       }),
+  //   };
+  //   socket.send(JSON.stringify(msg));
+  //   }
+  //   socket.onmessage = (e) => {
+  //     const data = JSON.parse(e.data);
+  //     if (data.type === "ping") {
+  //       return;
+  //     }
+  //     if (data.message) {
+  //       console.log(data.message);
+  //     }
+  //   }
+  //   socket.onerror = (err) => {
+  //     console.log(err);
+  //   };
+  // }
+  // createSocket();
 
   return (
     <>

@@ -18,12 +18,14 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseButton,
-  Box
+  Box,Badge
 } from '@chakra-ui/react';
 import CreateRequest from './CreateRequest';
 import { Link, useHistory } from 'react-router-dom';
 import "leaflet/dist/leaflet.css";
 import LocateUser from './LocateUser';
+import { useUserState } from '../../contexts/user';
+
 
 function Location() {
 const [request, setRequest] = useState([]);
@@ -35,8 +37,7 @@ const history = useHistory();
 const [loading, setLoading] = useState(false);
 const cancelRef = React.useRef()
 const { isOpen, onOpen, onClose } = useDisclosure()
-
-
+const {user} = useUserState();
 
 
   const markerIcon = new L.icon ({
@@ -80,12 +81,12 @@ const { isOpen, onOpen, onClose } = useDisclosure()
  const fetchRequests = async () => {
   const res = await axios.get(API_REQUESTS);
   setRequest(res.data);
-  console.log(res.data);
 };
 
 useEffect(() => {
   fetchRequests();
   setLoading(true);
+  console.log(request);
 }, []);
 
 
@@ -94,7 +95,7 @@ useEffect(() => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   let request_id = ref.current.value;
-  axios.post((API_FULFILLMENTS), {request_id})
+  axios.post((API_FULFILLMENTS), {request_id })
   .then((res) => {
     setFulfillement(res.data);
   }
@@ -102,7 +103,6 @@ const handleSubmit = async (e) => {
   .catch((err) => console.log(err));
   onClose();
   setLoading(true);
-  alert("You have already fulfilled this request");
 };
 
 const data = request.length
@@ -169,9 +169,9 @@ const data = request.length
           width={'70%'}
           fontWeight={'medium'}
           >
-          Unfillfilled Requests{' '}
+          {data}{' '}
           <chakra.strong >
-            {data}
+            unfulfilled requests
           </chakra.strong>{' '}
           drag the map and find the nearest requests
         </chakra.h2>
@@ -236,11 +236,14 @@ const data = request.length
                   direction={'column'}
                   textAlign={'left'}
                   justifyContent={'space-between'}>
-                    
                   <chakra.p
                     fontWeight={'medium'}
                     fontSize={'15px'}
                     pb={4}>
+                      <Badge variant='solid' colorScheme='green'>
+                    {request.situation}
+                    </Badge>
+                    <br/>
                     {request.description}<br />
                     Address :{request.address}
                   </chakra.p>
@@ -252,9 +255,9 @@ const data = request.length
                       {' '}
                     </chakra.span><br />
                   </chakra.p>
-                  <form onSubmit={handleSubmit}>
+                  <form>
                     <input ref={ref} defaultValue={request.id} hidden={true} />
-                    <Button onClick={onOpen} colorScheme='teal'>Help Now</Button>
+                    <Button onClick={onOpen} colorScheme='teal' disabled={request.situation === 'Fulfilled'}>Fulfill</Button>
                     <AlertDialog
                       motionPreset='slideInBottom'
                       leastDestructiveRef={cancelRef}
@@ -265,7 +268,7 @@ const data = request.length
                       <AlertDialogOverlay />
 
                       <AlertDialogContent>
-                        <AlertDialogHeader>Help Now</AlertDialogHeader>
+                        <AlertDialogHeader >Help Now</AlertDialogHeader>
                         <AlertDialogCloseButton />
                         <AlertDialogBody>
                           Would you like to fulfill this request?
@@ -281,13 +284,11 @@ const data = request.length
                       </AlertDialogContent>
                     </AlertDialog>
                   </form> 
-                  <Link to={`/requests/${request.id}`}>
-                    View Request
-                  </Link>
                 </Flex>
 
               </Flex>
             )
+            else return null
 
           })}
           </SimpleGrid>

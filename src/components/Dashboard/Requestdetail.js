@@ -8,7 +8,7 @@ import { Avatar, Flex, Text, Tooltip, Button, Input, Container,
    useDisclosure, Divider,TableContainer,Table, Thead,Tr,Tbody,Th,Td,
    Accordion,AccordionItem,AccordionButton,AccordionIcon,AccordionPanel,Box,Badge } from "@chakra-ui/react";
 import { Link, useHistory } from 'react-router-dom';
-
+import Card from 'react-bootstrap/Card';
 
 function RequestDetail({match}) {
   const AlwaysScrollToBottom = () => { 
@@ -40,7 +40,6 @@ const fetchRequest = () => {
     )
     .then((res) => {
       setRequests(res.data);
-      console.log(res.data);
     })
     .catch((err) => console.log(err));
 };
@@ -55,25 +54,22 @@ const fetchData = () => {
     )
     .then((res) => {
       setData(res.data);
-      console.log(res.data);
     })
     .catch((err) => console.log(err));
 };
 
-
-const postData = async (e) => {
-  //e.preventDefault();
-axios
-  .post(`${API_FULFILLMENTS}`, {
-    request_id
-  })
-  .then((response) => {
-    setData([...data,response.data]);
-    setText('');
-    console.log(response);
-    window.location.reload(false);
-   })   
+// delete request
+const deleteRequest = async (id) => {
+  try {
+    const response = await axios
+      .delete(`${API_REQUESTS}/${id}`)
+    const data = response.data
+    console.log(data)
+    fetchRequest();
+  } catch(error) {
+    alert ( " Please Try later ")
   }
+}
 
 
   return (
@@ -82,7 +78,7 @@ axios
       <h1 className='pb-2'style={{fontWeight:"600", fontSize:"30px"}}>Request Details </h1>
       <h5 className="card-title"><span style={{fontWeight:"600"}}> Help : </span>{request.user?.username}</h5>
       <br/>
-      <Button colorScheme='blue' onClick={onOpen}>
+      <Button colorScheme='teal' onClick={onOpen}>
         Check Request here
       </Button>
     </Container>
@@ -101,22 +97,25 @@ axios
         </DrawerContent>
       </Drawer>
 
-      <Container className='p-5' >
-      <h2>List of Fulfillers</h2>
+      <Container className='p-1 RequestCards mt-2' >
+      <h2 style={{fontWeight:"600"}}>List of Fulfillers</h2>
         {request.fulfillments?.map((fulfillment) => (
-            <Flex key={fulfillment.id} colorScheme="teal" className='p-2'>
-              <Avatar name={fulfillment.user?.username} src={fulfillment.user?.avatar} />
-              <Box ml='3'>
-                <Text fontWeight='bold' >
-                {fulfillment.user?.username}
-                  <Badge ml='1' colorScheme='green'>
-                  {fulfillment.user?.email}
-                  </Badge>
-                </Text>
-              </Box>
-              <Link to={`/fulfillments/${fulfillment.id}`} className="m-2 p-2">
-              <Text fontSize='sm'>Contact</Text>
+            <Flex key={fulfillment.id} colorScheme="teal" className='p-1'>
+              <Card body>
+              <span style={{fontWeight:"600"}}> Fulfiller:</span>
+                {fulfillment.user?.username} <br/>
+                <span style={{fontWeight:"600"}}>Request By :</span>
+                  {request.user?.username}<br/>
+                  <Link to={`/fulfillments/${fulfillment.id}`} className="mt-2">
+                    {/* disable button is username doesnt equal fulfillment username or not request username */}
+                    <Button colorScheme='teal' disabled={user.username !== fulfillment.user?.username && user.username !== request.user?.username}>
+                      Check Fulfillment
+                    </Button>
+                    {/* <Button colorScheme='teal' disabled={user.username !== fulfillment.user?.username}>
+                      Send a Message
+                    </Button> */}
                 </Link>
+              </Card>
             </Flex>
           ))}
       </Container>

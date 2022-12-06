@@ -35,12 +35,24 @@ export default function MyRequests(){
         const data = response.data
   
         setRequests(data.reverse())
-        console.log(response)
   
       } catch(error) {
         console.log(error)
       }
     }
+
+    // delete request
+const deleteRequest = async (id) => {
+  try {
+    const response = await axios
+      .delete(`${API_REQUESTS}/${id}`)
+    const data = response.data
+    console.log(data)
+    getRequests();
+  } catch(error) {
+    alert ( " Please Try later ")
+  }
+}
 
     const data = requests.length
 
@@ -156,6 +168,11 @@ export default function MyRequests(){
                           </Button>
                         </Link>
                       </Flex>
+                      <Button colorScheme='red' 
+                            fontWeight={'medium'}
+                            fontSize={'15px'}
+                            px={6} onClick={() =>  deleteRequest(request.id)}>X</Button>
+
       
                     </Flex>
                   )
