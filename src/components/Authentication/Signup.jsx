@@ -44,34 +44,80 @@ const Signup = ({ history }) => {
     password: '',
     username: '',
     passwordConfirmation: '',
+    file: ''
   });
 
   // const [email, setEmail] = useState('');
   // const [firstName, setFirstName] = useState('');
   // const [lastName, setLastName] = useState('');
   // const [password, setPassword] = useState('');
+  // const [username, setUsername] = useState('');
   // const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const authDispatch = useAuthDispatch();
   const userDispatch = useUserDispatch();
 
-  const handleSubmitExternally = async   values => {
-    const { email, firstName, lastName,username, password, passwordConfirmation } = values;
+  // const handleSubmitExternally = async   values => {
+  //   const { email, firstName, lastName,username, password, passwordConfirmation,file } = values;
+  //   try {
+  //     setLoading(true);
+  //     const {
+  //       data: { user, auth_token },
+  //     } = await authenticationApi.signup({
+  //       user: {
+  //         email,
+  //         first_name: firstName,
+  //         last_name: lastName,
+  //         password: password,
+  //         username: username,
+  //         password_confirmation: passwordConfirmation,
+  //         file: file
+  //       },
+  //     });
+      
+  //     authDispatch({
+  //       type: 'LOGIN',
+  //       payload: { auth_token, email, is_admin: false },
+  //     });
+  //     userDispatch({ type: 'SET_USER', payload: { user } });
+  //     setAuthHeaders();
+  //     history.push('/requests');
+  //     toast({
+  //       description: 'Sign up successfully.',
+  //       status: 'success',
+  //       duration: 1500,
+  //       isClosable: true,
+  //     });
+  //   } catch (error) {
+  //     // alert(error.response.data.error);
+  //     toast({
+  //       //description: error.response.data.error,
+  //       status: 'error',
+  //       duration: 1500,
+  //       isClosable: true,
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // handle submite externally with data append file 
+  const handleSubmitExternally = async (values) => {
+    const { email, firstName, lastName, username, password, passwordConfirmation, file } = values;
     try {
       setLoading(true);
+      const formData = new FormData();
+      formData.append('user[email]', email);
+      formData.append('user[first_name]', firstName); 
+      formData.append('user[last_name]', lastName);
+      formData.append('user[username]', username);
+      formData.append('user[password]', password);
+      formData.append('user[password_confirmation]', passwordConfirmation);
+      formData.append('user[file]', file);
       const {
         data: { user, auth_token },
-      } = await authenticationApi.signup({
-        user: {
-          email,
-          first_name: firstName,
-          last_name: lastName,
-          password: password,
-          username: username,
-          password_confirmation: passwordConfirmation,
-        },
-      });
+      } = await authenticationApi.signup(formData);
       authDispatch({
         type: 'LOGIN',
         payload: { auth_token, email, is_admin: false },
@@ -92,17 +138,29 @@ const Signup = ({ history }) => {
         status: 'error',
         duration: 1500,
         isClosable: true,
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+            });
+          } finally {
+            setLoading(false);
+          }
+        };
+
+
+
+  //const handleFileUpload = (e) => { 
+  //   this.setState({
 
   // const handleFileUpload = (e) => {
   //   this.setState({
-  //      image: e.target.files[0]
+  //      file: e.target.files[0]
   //   })
   //   }
+
+  //   console.log(handleFileUpload)
+
+  //define setFieldValues
+  const setFiledValue = (field, value) => {
+    setInitialValues({ ...initialValues, [field]: value });
+  };
 
   return (
     <Flex
@@ -130,7 +188,7 @@ const Signup = ({ history }) => {
               handleSubmitExternally(values);
             }}
           >
-            {({ values, handleChange, handleSubmit, isSubmitting }) => {
+            {({ values, handleChange, handleSubmit, isSubmitting,setFieldValue }) => {
               return (
                 <form onSubmit={handleSubmit}>
                   <Stack spacing={3}>
@@ -305,6 +363,9 @@ const Signup = ({ history }) => {
                           </FormControl>
                         )}
                       </Field>
+                      <input type="file" name="file" multiple={true} onChange={(event)=> (
+                        setFieldValue("file", event.currentTarget.files[0])
+                      )} />
                     </Box>
                     <Stack spacing={10}>
                       <Button

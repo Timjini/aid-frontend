@@ -36,7 +36,11 @@ function MyFulfillments() {
         getFulfillments();
     }, [])
   
-const data = fulfillments.length
+    let counter = 0;
+
+    for (let i = 0; i < fulfillments.length; i++) {
+      if ((fulfillments[i].situation === "Pending" && user.username === fulfillments[i].user?.username)) counter++;
+    }
 
 // delete fulfillment
 const deleteFulfillment = async (id) => {
@@ -72,9 +76,9 @@ const deleteFulfillment = async (id) => {
           width={'70%'}
           fontWeight={'medium'}
           >
-          Total Number of Fulfillments :{' '}
+          Total Number of Pending Fulfillments :{' '}
           <chakra.strong >
-            {data}
+            {counter}
           </chakra.strong>{' '}
         </chakra.h2>
       </Box>
@@ -91,7 +95,7 @@ const deleteFulfillment = async (id) => {
               mt={16}
               mx={'auto'}>
                 {fulfillments?.map((fulfillment,index)  => {
-             if (user.username === fulfillment.user.username)
+             if (user.username === fulfillment.user.username && fulfillment.situation === "Pending")
              return(
                     <Flex
                       key={fulfillment.id}
@@ -176,13 +180,9 @@ const deleteFulfillment = async (id) => {
       
                     </Flex>
                   )
-        else {
-          return (
-            <div>
-                <h1>no Fulfillments</h1>
-            </div>
-          )
-        }
+                    else {
+                      return <h1> No fulfillment</h1>
+                    }
       })}
     </SimpleGrid>
     </div>

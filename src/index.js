@@ -10,10 +10,10 @@ import ActionCable from 'actioncable';
 const cable = ActionCable.createConsumer(`${API_WS_ROOT}`);
 console.log(cable);
 ReactDOM.render(
-  <StrictMode>
+
     <ActionCableProvider cable={cable}>
       <App  />
     </ActionCableProvider>
-      </StrictMode>,
+  ,
   document.getElementById('root')
 );
