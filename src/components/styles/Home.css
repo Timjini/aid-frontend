@@ -726,23 +726,16 @@ button, input, optgroup, select, textarea {
 
 .spinnerCenter {
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 }
 .loading{
   width: 100vw;
-  height: 100vh;
+  height: 50vh;
   background-color: teal;
-  z-index: 1;
-}
+  z-index: 999;
+  position: absolute;
 
-.infoIcon{
-  position: fixed;
-  right: 0px; bottom: 0px;
-  width: 200px;
-  height:40px;
-  background-color:lightblue;
-  padding: 5px;
 }

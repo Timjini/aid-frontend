@@ -46,7 +46,7 @@ const {user} = useUserState();
 const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 6000)
+    setTimeout(() => setLoading(false), 5000)
   }, [])
 
 
@@ -119,17 +119,32 @@ for (let i = 0; i < request.length; i++) {
   request[i].longitude >= mapRef.current.getBounds()._southWest.lng &&
   request[i].longitude <= mapRef.current.getBounds()._northEast.lng) counter++;
 }
+// get lat and lng from user location
+const [lat, setLat] = useState(0);
+const [lng, setLng] = useState(0);
+const [error, setError] = useState(null);
 
+const success = (position) => {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  setLat(latitude);
+  setLng(longitude);
+};
+
+useEffect(() => {
+  navigator.geolocation.getCurrentPosition(success, error);
+}, []);
+
+
+ 
 
 
 
   return (
     <>
-    <div className='infoIcon'>
-       <image src={require('../../assets/images/info.png')} />
-    </div>
     
-       <MapContainer ref={mapRef} className='map' center={[41.0082, 28.9784]} zoom={14} scrollWheelZoom={false} zoomAnimation={false}>
+       <MapContainer ref={mapRef} className='map' center={[lat,lng]} zoom={14} scrollWheelZoom={false} zoomAnimation={false}>
           <LocateUser />
           <InnerComponent setBoundaries={setCurrentBoundaries} />
           <TileLayer
