@@ -22,11 +22,9 @@ function MyFulfillments() {
         try {
           const response = await axios
             .get(`${API_FULFILLMENTS}`)
-    
           const data = response.data
-    
           setFullfilments(data)
-    
+          console.log(data)
         } catch(error) {
           alert ( " Please Try later ")
         }
@@ -39,7 +37,7 @@ function MyFulfillments() {
     let counter = 0;
 
     for (let i = 0; i < fulfillments.length; i++) {
-      if ((fulfillments[i].situation === "Pending" && user.username === fulfillments[i].user?.username)) counter++;
+      if (( user.username === fulfillments[i].user?.username)) counter++;
     }
 
 // delete fulfillment
@@ -48,7 +46,6 @@ const deleteFulfillment = async (id) => {
     const response = await axios
       .delete(`${API_FULFILLMENTS}/${id}`)
     const data = response.data
-    console.log(data)
     getFulfillments();
   } catch(error) {
     alert ( " Please Try later ")
@@ -94,8 +91,8 @@ const deleteFulfillment = async (id) => {
               spacing={'20'}
               mt={16}
               mx={'auto'}>
-                {fulfillments?.map((fulfillment,index)  => {
-             if (user.username === fulfillment.user.username && fulfillment.situation === "Pending")
+                {fulfillments?.map((fulfillment,request)  => {
+             if (user.username === fulfillment.user.username)
              return(
                     <Flex
                       key={fulfillment.id}
@@ -144,10 +141,9 @@ const deleteFulfillment = async (id) => {
                           fontSize={'18px'}
                           pb={4}>
                             <Badge variant='solid' colorScheme='green'>
-                              text
+                              {fulfillment.id}
                             </Badge><br/>
-                          {fulfillment.id}
-                          {fulfillment.user.username}
+
                         </chakra.p>
                         <chakra.p  fontWeight={'bold'} fontSize={16}>
                           <chakra.span
@@ -166,7 +162,8 @@ const deleteFulfillment = async (id) => {
                             Send a Message
                           </Button>
                         </Link>
-                        <Button
+                      </Flex>
+                      <Button
                             fontWeight={'medium'}
                             fontSize={'15px'}
                             px={8}
@@ -174,10 +171,8 @@ const deleteFulfillment = async (id) => {
                             margin={2}
                             onClick = {() => deleteFulfillment(fulfillment.id)}
                             >
-                            Delete
+                            X
                           </Button>
-                      </Flex>
-      
                     </Flex>
                   )
                     else {

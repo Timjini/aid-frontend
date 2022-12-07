@@ -146,17 +146,6 @@ const Signup = ({ history }) => {
 
 
 
-  //const handleFileUpload = (e) => { 
-  //   this.setState({
-
-  // const handleFileUpload = (e) => {
-  //   this.setState({
-  //      file: e.target.files[0]
-  //   })
-  //   }
-
-  //   console.log(handleFileUpload)
-
   //define setFieldValues
   const setFiledValue = (field, value) => {
     setInitialValues({ ...initialValues, [field]: value });

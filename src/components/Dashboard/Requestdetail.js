@@ -64,7 +64,6 @@ const deleteRequest = async (id) => {
     const response = await axios
       .delete(`${API_REQUESTS}/${id}`)
     const data = response.data
-    console.log(data)
     fetchRequest();
   } catch(error) {
     alert ( " Please Try later ")

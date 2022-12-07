@@ -91,12 +91,10 @@ const [loading, setLoading] = useState(true)
  const fetchRequests = async () => {
   const res = await authenticationApi.getrequest((API_REQUESTS), setAuthHeaders());
   setRequest(res.data);
-  console.log(res.data)
 };
 
 useEffect(() => {
   fetchRequests();
-  console.log(request);
 }, []);
 
 

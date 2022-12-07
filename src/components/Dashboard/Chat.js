@@ -30,7 +30,6 @@ function Chat({match}) {
         )
         .then((res) => {
           setFulfillment(res.data);
-          console.log(res.data);
         })
         .catch((err) => console.log(err));
     };
@@ -45,7 +44,6 @@ function Chat({match}) {
         .then((response) => {
           setData([...data,response.data]);
           setBody('');
-          console.log(response);
           window.location.reload(false);
          })   
         }
@@ -61,7 +59,6 @@ function Chat({match}) {
         )
         .then((res) => {
           setData(res.data);
-          console.log(res.data);
         })
         .catch((err) => console.log(err));
     };
@@ -71,7 +68,7 @@ function Chat({match}) {
 
     <Container style={{ paddingTop: '50px' }}>
         <span style={{ fontWeight: "600", fontSize: "25px", paddingBottom: '20px' }}>Leave a Message here.</span>
-        <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3" style={{ backgroundColor: '#f1ffff' }}>
+        <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3" style={{ backgroundColor: '#f1ffff',minHeight: "50vh" }}>
           {fulfillment.messages?.map((message) => {
             if (message.user?.username === user.username) {
               return (
