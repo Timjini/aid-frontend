@@ -31,7 +31,6 @@ import authenticationApi  from '../../apis/authentication';
 import '../styles/Home.css';
 
 
-
 function Location() {
 const [request, setRequest] = useState([]);
 const mapRef = useRef();
@@ -93,6 +92,10 @@ const [loading, setLoading] = useState(true)
   setRequest(res.data);
 };
 
+// prevent the page from refreshing when fetching Requests
+
+
+
 useEffect(() => {
   fetchRequests();
 }, []);
@@ -119,33 +122,16 @@ for (let i = 0; i < request.length; i++) {
   request[i].longitude >= mapRef.current.getBounds()._southWest.lng &&
   request[i].longitude <= mapRef.current.getBounds()._northEast.lng) counter++;
 }
-// get lat and lng from user location
-const [lat, setLat] = useState(0);
-const [lng, setLng] = useState(0);
-const [error, setError] = useState(null);
-
-const success = (position) => {
-  const latitude = position.coords.latitude;
-  const longitude = position.coords.longitude;
-
-  setLat(latitude);
-  setLng(longitude);
-};
-
-useEffect(() => {
-  navigator.geolocation.getCurrentPosition(success, error);
-}, []);
 
 
- 
-
+let position = [51.505, -0.09];
 
 
   return (
     <>
     
-       <MapContainer ref={mapRef} className='map' center={[lat,lng]} zoom={14} scrollWheelZoom={false} zoomAnimation={false}>
-          <LocateUser />
+       <MapContainer center={position}  zoom={13} scrollWheelZoom={true} ref={mapRef}>
+       <LocateUser  />
           <InnerComponent setBoundaries={setCurrentBoundaries} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

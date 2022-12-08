@@ -726,7 +726,7 @@ button, input, optgroup, select, textarea {
 
 .spinnerCenter {
   position: fixed;
-  top: 40%;
+  top: 35%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
@@ -734,8 +734,18 @@ button, input, optgroup, select, textarea {
 .loading{
   width: 100vw;
   height: 50vh;
-  background-color: teal;
   z-index: 999;
   position: absolute;
-
+  /*background-color: white with 10% opacity and 10% blur*/
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(1px);
 }
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
