@@ -1,7 +1,7 @@
 # [Aid Platform](https://https://aid-app.netlify.app/)
-##### A web application for the neibourhoud, the users can post a request to get help from their neibours. <br/>
+##### A web application for the neighborhood, the users can post a request to get help from their neighbors. <br/>
 - the requests are displayed on leafletjs map with custom markers.<br/>
-- The users are located automaticly once logged in and can see only the requests near them or when dragging the map get more posts. 
+- The users are located automatically once logged in and can see only the requests near them or when dragging the map get more posts. 
 - A messages box was implemented to link the fulfillers and the requesters. 
 
 <img src="https://devhl.dev/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2FEJWgv9XzSdSWebTKEOkG&w=640&q=75" alt="aid application" />
