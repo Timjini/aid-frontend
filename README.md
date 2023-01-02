@@ -15,3 +15,7 @@
 - <a href="https://github.com/Timjini/aid-backend" target="_blank">Github Repo</a>
 - <a href="https://devhl.dev/projects/aid-frontend" target="_blank">Info about the app</a>
 - <a href="http://fierce-badlands-13020.herokuapp.com/" target="_blank">Deployed Api</a>
+
+# Deployed By
+Hatim Laajini <br/>
+<a href="https://www.devhl.dv" target="_blank">Portfolio</a>
