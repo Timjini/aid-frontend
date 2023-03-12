@@ -3,7 +3,7 @@
   'Access-Control-Allow-Origin': '*',
 };
 // const baseUrl = 'http://localhost:3001/'
-const baseUrl = 'https://fierce-badlands-13020.herokuapp.com/';
+const baseUrl = 'https://serene-castle-01441.herokuapp.com/';
 
 export const API_ROOT = `${baseUrl}api/v1`; 
 export const API_WS_ROOT = `${baseUrl}cable`; 
